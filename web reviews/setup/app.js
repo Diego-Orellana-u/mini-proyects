@@ -65,18 +65,18 @@ function showPerson(person){
 
 nextBtn.addEventListener("click",function(){
   currentItem++
-  if(currentItem === 4) currentItem = 0
+  if(currentItem > reviews.length - 1) currentItem = 0
   showPerson(currentItem)
 })
 
 prevBtn.addEventListener("click",function(){
   currentItem--
-  if(currentItem === -1) currentItem = 3
+  if(currentItem < 0) currentItem = reviews.length - 1
   showPerson(currentItem)
 })
 
 randomBtn.addEventListener("click",function(){
-  let random = Math.floor(Math.random()*4)
+  let random = Math.floor(Math.random()*reviews.length)
   showPerson(random)
   console.log(random)
 
