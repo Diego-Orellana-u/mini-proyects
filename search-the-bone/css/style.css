@@ -44,3 +44,7 @@ body{
 .randomStart{
     background: green;
 }
+
+input{
+    display:inline  ;
+}
