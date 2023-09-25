@@ -2,6 +2,7 @@ const board = document.querySelector("#board")
 const button = document.querySelector("button")
 const direction = document.querySelector("#direction")
 const meters = document.querySelector("#meters")
+const distanceText = document.querySelector("#distance")
 
 
 
@@ -42,8 +43,7 @@ function createRandomStart(){
 
 createRandomStart()
 
-const randomBonePosition = document.querySelector('.randomBone').getAttribute("data-id")
-const randomStartPosition = document.querySelector('.randomStart').getAttribute("data-id")
+
 
 function movementFunction(direction,meters){ //!!right movement have some bugs
     let actualPosition = document.querySelector('.randomStart').getAttribute("data-id")
@@ -65,7 +65,7 @@ function movementFunction(direction,meters){ //!!right movement have some bugs
         document.querySelector(`[data-id="${actualPosition}"]`).classList.remove("randomStart")
         if(meters < 10 - Math.floor(actualPosition/10)){  //this prevents to pass to the other side of the board
             actualPosition = document.querySelector(`[data-id="${Number(actualPosition) + (10*meters)}"]`)
-        }else if(meters > 10 - Math.floor(actualPosition/10)){
+        }else if(meters >= 10 - Math.floor(actualPosition/10)){
             actualPosition = document.querySelector(`[data-id="${90 + actualPosition%10}"]`)
         }
         if(actualPosition){
@@ -89,10 +89,8 @@ function movementFunction(direction,meters){ //!!right movement have some bugs
         document.querySelector(`[data-id="${actualPosition}"]`).classList.remove("randomStart")
         if(meters < 10 - actualPosition%10){  //this prevents to pass to the other side of the board
             actualPosition = document.querySelector(`[data-id="${Number(actualPosition) + Number(meters)}"]`)
-            console.log("hola")
-        }else if(meters > 10 - actualPosition%10){
+        }else if(meters >= 10 - actualPosition%10){
             actualPosition = document.querySelector(`[data-id="${Math.floor(actualPosition/10)*10 + 9}"]`)
-            console.log("chao")
         }
         if(actualPosition){
             actualPosition.classList.add("randomStart")
@@ -101,12 +99,30 @@ function movementFunction(direction,meters){ //!!right movement have some bugs
     
 }
 
+function trackDistance(){
+    const randomBonePosition = document.querySelector('.randomBone').getAttribute("data-id")
+    const randomStartPosition = document.querySelector('.randomStart').getAttribute("data-id")
+
+    const bonePositionX = randomBonePosition%10
+    const bonePositionY = Math.floor(randomBonePosition/10)
+
+    const dogPositionX = randomStartPosition%10
+    const dogPositionY = Math.floor(randomStartPosition/10)
+
+    const distanceY = Math.abs(bonePositionY-dogPositionY)
+    const distanceX = Math.abs(bonePositionX-dogPositionX)
+
+    const finalDistance = distanceX + distanceY
+    
+    if(finalDistance !== 0){
+        distanceText.innerText = `You are ${finalDistance}m from the bone`
+    }else{
+        distanceText.innerText = `You have found the bone! Congratulations!`
+    }
+
+}
+
 button.addEventListener("click", () =>{
     movementFunction(direction.value,meters.value)
-    console.log(direction.value)
-    console.log(meters.value)
+    trackDistance()
 })
-
-
-
-

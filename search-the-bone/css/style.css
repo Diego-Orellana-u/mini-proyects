@@ -34,7 +34,7 @@ body{
     background: #1d1d1d;
     margin: 2px;
     box-shadow: 0 0 2px #000;
-    transition: 1s ease;
+    transition: 0.3s ease;
 }
 
 .randomBone{
@@ -46,5 +46,10 @@ body{
 }
 
 input{
-    display:inline  ;
+    display: inline-block;
+}
+
+#distance{
+    color: white;
+    
 }
