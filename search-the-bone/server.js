@@ -29,6 +29,13 @@ const server = http.createServer((req,res) => {
         case "/js/main.js":
         readWrite("js/main.js","text/javascript")
         break;
+
+        case "/img/funnydog3.png":
+            fs.readFile('img/funnydog3.png', function(err, data) {
+                res.write(data);
+                res.end();
+        });
+        break;
     
         case "/api":
             if('student' in params){

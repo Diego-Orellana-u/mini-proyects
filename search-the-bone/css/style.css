@@ -31,18 +31,10 @@ body{
 .square{
     width: 60px;
     height: 60px;
-    background: #1d1d1d;
-    margin: 2px;
-    box-shadow: 0 0 2px #000;
+    background: #265828;
+    margin: 1.5px;
+    box-shadow: 0 0 2px #265828;
     transition: 0.3s ease;
-}
-
-.randomBone{
-    background: red;
-}
-
-.randomStart{
-    background: green;
 }
 
 input{
@@ -51,5 +43,10 @@ input{
 
 #distance{
     color: white;
-    
+}
+
+img{
+    display: block;
+    height: 60px;
+    width: 60px;
 }

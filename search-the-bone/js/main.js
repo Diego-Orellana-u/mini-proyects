@@ -3,6 +3,13 @@ const button = document.querySelector("button")
 const direction = document.querySelector("#direction")
 const meters = document.querySelector("#meters")
 const distanceText = document.querySelector("#distance")
+const img = document.createElement("img")
+img.src = "/img/funnydog3.png"
+
+window.addEventListener("load", () =>{
+    trackDistance()
+    document.querySelector('.randomStart').appendChild(img)
+})
 
 
 
@@ -51,6 +58,7 @@ function movementFunction(direction,meters){ //!!right movement have some bugs
     //move up
     if(direction === "up"){
         document.querySelector(`[data-id="${actualPosition}"]`).classList.remove("randomStart")
+        
         if(meters <= Math.floor(actualPosition/10)){  //this prevents to pass to the other side of the board
             actualPosition = document.querySelector(`[data-id="${Number(actualPosition) - (10*meters)}"]`)
         }else if(meters > Math.floor(actualPosition/10)){
@@ -77,7 +85,7 @@ function movementFunction(direction,meters){ //!!right movement have some bugs
         document.querySelector(`[data-id="${actualPosition}"]`).classList.remove("randomStart")
         if(meters < actualPosition%10){  //this prevents to pass to the other side of the board
             actualPosition = document.querySelector(`[data-id="${actualPosition - meters}"]`)
-        }else if(meters > actualPosition%10){
+        }else if(meters >= actualPosition%10){
             actualPosition = document.querySelector(`[data-id="${actualPosition - actualPosition%10}"]`)
         }
         if(actualPosition){
@@ -96,6 +104,7 @@ function movementFunction(direction,meters){ //!!right movement have some bugs
             actualPosition.classList.add("randomStart")
         }
     }
+    document.querySelector('.randomStart').appendChild(img)
     
 }
 
@@ -117,7 +126,7 @@ function trackDistance(){
     if(finalDistance !== 0){
         distanceText.innerText = `You are ${finalDistance}m from the bone`
     }else{
-        distanceText.innerText = `You have found the bone! Congratulations!`
+        distanceText.innerText = `You found the bone! Congratulations!`
     }
 
 }
