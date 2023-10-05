@@ -1,0 +1,91 @@
+* {
+    -moz-box-sizing: border-box; /* Firexfox */
+    -webkit-box-sizing: border-box; /* Safari/Chrome/iOS/Android */
+    box-sizing: border-box; /* IE */
+}
+
+body {
+    background-color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+    line-height: 1.4;
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+    font-size: 2rem;
+
+}
+
+.app__container{
+    background-color: #333;
+    border-radius: 20px;
+    width: 500px;
+    height: 700px;
+
+}
+
+.input__container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.list{
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+input{
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+    font-size: 1rem;
+    width: 400px;
+    height: 40px; 
+    border: 0;
+    margin-right: -4px;
+    outline: none;
+}
+
+article{
+    display: flex;
+    height: 30px;
+    margin-left: 15px;
+   
+}
+
+p{
+    margin: 0;
+    margin-right: 40px;
+    word-break: break-all;
+}
+
+.completed-button,
+.edit-button,
+.delete-button{
+    margin-right: 4px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    font-size: 18px;
+}
+
+.add-button{
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+    font-size: 1rem;
+    height: 40px;
+    border: 0;
+    background-color: #555555;
+    color: white;
+    padding-left: 15px;
+
+}
+
