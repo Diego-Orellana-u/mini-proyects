@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <section class="app__container">
+
+        <h1>Add your task here</h1>
+        <div class="input__container">
+            <form action="/addtask" method="POST" autocomplete="off">
+                <input type="text" name="task" placeholder="">
+                <button type="submit" class="add-button">Add task</button>
+            </form>
+        </div>
+            
+        <div class="notes__container">
+            <div class="notes">
+                <% for(let i = 0; i < quotes.length; i++) {%>
+                    <article class="list" data-id= <%=quotes[i]._id%>>
+                        <p><%=quotes[i].task%></p>
+                        <button class="completed-button"><i class="fas fa-check"></i></button>
+                        <button class="edit-button"><i class="fas fa-edit"></i></button>
+                        <button class="delete-button"><i class="fas fa-trash"></i></button>
+                    </article>
+                <% } %>
+            </div>
+        </div>
+    </section>
+    <script src="/main.js"></script>
+</body>
+</html>
