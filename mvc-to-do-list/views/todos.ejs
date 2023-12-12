@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="todo__page-title-container">
+        <h1>To-Do list</h1> 
+    </div>
+    <div class="todo__page-list-container">
+        <ul class="todo__ul">
+
+        </ul>
+    </div>
+    <div class="todo__page-remaining-container">
+        <span class="remaining">There are x tasks remaining</span>
+    </div>
+    
+    <div class="add__todo-container">
+        <form action="/todos/addTodo" method="POST">
+            <input type="text" placeholder="Enter Todo Item" name='todoItem'>
+            <input type="submit">
+        </form>
+    </div>
+</body>
+</html>

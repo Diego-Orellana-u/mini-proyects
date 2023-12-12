@@ -9,6 +9,7 @@ const { ObjectId } = require('mongodb'); //require ObjectId method to use it to 
 MongoClient.connect('mongodb+srv://diegonacho7:ktdOZFvb5Tne9JE0@star-wars.q8qddju.mongodb.net/?retryWrites=true&w=majority')
     .then(client => {
         console.log("connected to Database")
+        
         const db = client.db('Tasks')  //create and name the database
         const taskCollection = db.collection('TaskCollection') //create a collection in mongodb
 
