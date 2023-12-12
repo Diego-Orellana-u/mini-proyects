@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="todo__page-title-container">
@@ -11,11 +12,17 @@
     </div>
     <div class="todo__page-list-container">
         <ul class="todo__ul">
+            <% todos.forEach( el => { %>
+                <li class="todoItem" data-id="<%=el._id %>">
+                    <span class="<%= el.completed === true ? 'completed' : 'not'%>"><%= el.todo %></span>
+                    <span class='del'> Delete </span>
+                </li>
 
+            <% }) %>
         </ul>
     </div>
     <div class="todo__page-remaining-container">
-        <span class="remaining">There are x tasks remaining</span>
+        <span class="remaining">There are <%= left %> tasks remaining</span>
     </div>
     
     <div class="add__todo-container">
@@ -24,5 +31,6 @@
             <input type="submit">
         </form>
     </div>
+    <script src="js/main.js"></script>
 </body>
 </html>
