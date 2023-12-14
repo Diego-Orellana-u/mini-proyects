@@ -1,21 +1,60 @@
-const uncompletedTask = document.querySelectorAll('.not');
-const completedTask = document.querySelectorAll('.completed');
-const deleteTask = document.querySelectorAll('.del')
+const completeTask = document.querySelectorAll(".not")
+const uncompletedTask = document.querySelectorAll('.completed')
+const deletedTask = document.querySelectorAll('.del')
 
-Array.from(uncompletedTask).forEach( el => {
-    el.addEventListener('click', completeTodo)
+completeTask.forEach(el => {
+    el.addEventListener('click', completeTodo )
 })
 
-completedTask.forEach( el => {
-    el.addEventListener('click', uncompleteTodo)
+uncompletedTask.forEach(el => {
+    el.addEventListener('click', uncompleteTask)
 })
 
+deletedTask.forEach( el => {
+    el.addEventListener('click', deleteTask)
+})
 
-async function completeTodo(){
+async function completeTodo (){
     const todoId = this.parentNode.dataset.id
     try{
-        const response = await fetch("todos/completeTodo",{
+       const response = await fetch('todos/completeTodo', {
+        method: 'put',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({
+            'todoIdFromJSFile': todoId
+        })
+    }) 
+    const data = await response.json()
+    console.log(data)
+    location.reload()
+    } catch (err) {
+        console.log(err)   
+    }
+}
+
+async function uncompleteTask(){
+    const todoId = this.parentNode.dataset.id
+    try {
+        const response = await fetch('todos/uncompleteTodo', {
             method: 'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'todoIdFromJSFile': todoId
+            })
+        })
+        const data = response.json()
+        console.log(data)
+        location.reload()
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+async function deleteTask() {
+    const todoId = this.parentNode.dataset.id
+    try {
+        const response = await fetch('todos/deleteTodo', {
+            method: 'delete',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 'todoIdFromJSFile': todoId
@@ -24,26 +63,75 @@ async function completeTodo(){
         const data = await response.json()
         console.log(data)
         location.reload()
-    }catch (err) {
+    } catch (err) {
         console.error(err)
     }
 }
 
-async function uncompleteTodo(){
-    const todoId = this.parentNode.dataset.id
-    try{
-        const response = await fetch("todos/uncompleteTodo", {
-            method: 'put',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({
-                'todoIdFromJSFile': todoId
-            })
-        })
-        const data = await response.json()
-        console.log(data)
-        location.reload()
-    }catch(err){
-         console.error(err)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// async function completeTodo(){
+//     const todoId = this.parentNode.dataset.id
+//     try{
+//         const response = await fetch("todos/completeTodo",{
+//             method: 'put',
+//             headers: {'Content-type': 'application/json'},
+//             body: JSON.stringify({
+//                 'todoIdFromJSFile': todoId
+//             })
+//         })
+//         const data = await response.json()
+//         console.log(data)
+//         location.reload()
+//     }catch (err) {
+//         console.error(err)
+//     }
+// }
+
+// async function uncompleteTodo(){
+//     const todoId = this.parentNode.dataset.id
+//     try{
+//         const response = await fetch("todos/uncompleteTodo", {
+//             method: 'put',
+//             headers: {'Content-type': 'application/json'},
+//             body: JSON.stringify({
+//                 'todoIdFromJSFile': todoId
+//             })
+//         })
+//         const data = await response.json()
+//         console.log(data)
+//         location.reload()
+//     }catch(err){
+//          console.error(err)
         
-    }
-}
+//     }
+// }

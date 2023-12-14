@@ -10,7 +10,6 @@ module.exports = {
             console.error(err)
         }
     },
-
     addTodo: async (req,res) => {
         try{
             await Todo.create({todo: req.body.todoItem, completed: false})
@@ -21,25 +20,86 @@ module.exports = {
         }
     },
     completeTodo: async (req, res) => {
-        try{
+        try {
             await Todo.findOneAndUpdate({_id: req.body.todoIdFromJSFile}, {
-                completed: true 
+                completed: true
             })
-            console.log('Marked Complete')
+            console.log('Marked complete')
             res.json('Marked Complete')
-        }catch (err) {
-            console.log(err)
+        } catch (err) {
+            console.error(err)
         }
     },
-    uncompleteTodo: async (req, res) => {
-        try{
-            await Todo.findByIdAndUpdate({_id: req.body.todoIdFromJSFile}, {
+    uncompleteTodo: async (req,res) => {
+        try {
+            await Todo.findOneAndUpdate({_id: req.body.todoIdFromJSFile}, {
                 completed: false
             })
             console.log('Marked Uncompleted')
-            res.json('Marked Uncomplete')
-        }catch(err){
-            console.log(err)
+            res.json('Marked uncompleted')
+        } catch (err) {
+            
+        }
+    },
+    deleteTodo: async (req, res) => {
+        // console.log(req.body)
+        console.log(res)
+        try {
+            await Todo.findOneAndDelete({_id: req.body.todoIdFromJSFile})
+            console.log('Task Deleted')
+            res.json('Task Deleted')
+        } catch (err) {
+            console.error(err)
         }
     }
+    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// completeTodo: async (req, res) => {
+//     try{
+//         await Todo.findOneAndUpdate({_id: req.body.todoIdFromJSFile}, {
+//             completed: true 
+//         })
+//         console.log('Marked Complete')
+//         res.json('Marked Complete')
+//     }catch (err) {
+//         console.log(err)
+//     }
+// },
+// uncompleteTodo: async (req, res) => {
+//     try{
+//         await Todo.findByIdAndUpdate({_id: req.body.todoIdFromJSFile}, {
+//             completed: false
+//         })
+//         console.log('Marked Uncompleted')
+//         res.json('Marked Uncomplete')
+//     }catch(err){
+//         console.log(err)
+//     }
+// }
