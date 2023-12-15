@@ -42,8 +42,7 @@ module.exports = {
         }
     },
     deleteTodo: async (req, res) => {
-        // console.log(req.body)
-        console.log(res)
+        console.log(req.body)
         try {
             await Todo.findOneAndDelete({_id: req.body.todoIdFromJSFile})
             console.log('Task Deleted')
