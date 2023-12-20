@@ -168,6 +168,7 @@ body {
     color: #222;
     transition: background-color .4s;
     overflow-x: hidden;
+    margin-top: 4.5rem;
 }
 ul, li, input, p, a, label, span{
     font-weight: 400;
@@ -260,6 +261,7 @@ img,svg {
     background-image: url('/img/login-img.jpg');
     display: flex;
     align-items: center;
+    background-size: cover;
 }
 
 .login__page-container{
@@ -269,6 +271,7 @@ img,svg {
 .login__page-left-text-container{
     display: flex;
     flex-direction: column;
+    margin-left: 4rem;
 }
 
 .login__page-left-first-text{
@@ -286,4 +289,11 @@ img,svg {
     font-size: 0.9rem;
     line-height: 1rem;
     color: #FFF;
+}
+
+.login__page-right-container{
+    margin: auto;
+}
+.profile__links-container{
+    margin: 5rem 0 0 2rem;
 }

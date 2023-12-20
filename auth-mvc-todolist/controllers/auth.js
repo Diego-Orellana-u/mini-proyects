@@ -58,7 +58,7 @@ exports.getSignup = (req, res) => {
     res.render('signup.ejs', {
       title: 'Create Account'
     })
-  }
+}
   
 exports.postSignup = (req, res, next) => {
     const validationErrors = []

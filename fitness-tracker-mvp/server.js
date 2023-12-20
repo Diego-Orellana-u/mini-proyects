@@ -10,6 +10,7 @@ const session = require('express-session')
 const flash = require('express-flash')
 
 const mainRoutes = require('./routes/main')
+const profileRoutes = require('./routes/profile')
 
 require('dotenv').config({ path: './config/.env' })
 require('./config/passport')(passport)
@@ -35,10 +36,11 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(flash()) //has to go before Routes
+
 // Routes
 app.use('/', mainRoutes)
-
-app.use(flash())
+app.use('/profile', profileRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on ${process.env.NODE_ENV} mode in ${process.env.PORT}`)
