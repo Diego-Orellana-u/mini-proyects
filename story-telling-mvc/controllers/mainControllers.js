@@ -1,5 +1,10 @@
 module.exports = {
-    getIndex: (req,res) => {
-        res.render('main.hbs')
+    getLogin: (req,res) => {
+        res.render('login.hbs', {
+            layout: 'login',
+        })
+    },
+    getDashboard: (req, res) => {
+        res.render('dashboard.hbs')
     }
 }
