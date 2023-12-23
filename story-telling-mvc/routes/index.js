@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const mainControllers = require('../controllers/mainControllers')
 
-// @desc     Login/landing
-// @route    GET /
-router.get('/', mainControllers.getLogin)
-router.get('/dashboard', mainControllers.getDashboard)
+const { ensureAuth, ensureGuest } = require('../middleware/auth')
+
+router.get('/', ensureGuest, mainControllers.getLogin)
+router.get('/dashboard', ensureAuth,  mainControllers.getDashboard)
 
 
 
