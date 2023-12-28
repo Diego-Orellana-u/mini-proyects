@@ -1,3 +1,5 @@
+const tasks = []
+
 const Tasks = () => {
   return (
     <div>
