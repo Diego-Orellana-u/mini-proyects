@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react'
+import { getRandomImage } from '../services/image'
 
-export function useCatImage ({ fact }) {
-    const [imageUrl, setImageUrl] = useState()
+export const useCatImage = ({ fact }) => {
+    const [imageUrl, setImageUrl ] = useState()
 
     useEffect(() => {
         if(!fact) return
-        const threeFirstWords = fact.split(' ').slice(0, 3).join(' ')
-        console.log(threeFirstWords)
+        const firstThreeWords = fact.split(' ').slice(0, 3).join(' ')
 
-        fetch(`https://cataas.com/cat/says/${threeFirstWords}?json=true`)
-            .then(res => res.json())
-            .then(response => {
-                const { _id } = response
-                console.log(_id)
-                setImageUrl(`${_id}/says/${threeFirstWords}`)
-            })
-    },[fact])
+        getRandomImage({firstThreeWords}).then(imgUrl => setImageUrl(imgUrl))
+
+    }, [fact])
+
     return { imageUrl }
 }
