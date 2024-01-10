@@ -1,66 +1,53 @@
-import React from 'react'
-import { useRef, useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { Movies } from './components/movies'
 import './assets/index.css'
-import './assets/app.css'
-import { Movies } from './components/Movies'
+import { useState} from 'react'
 import { useMovies } from './hooks/useMovies'
-
-
-
-function useSearch(){
-    const [search, updateSearch] = useState('')
-    const [error, setError] = useState(null)
-    const isFirstInput = useRef(true)
-    
-
-    useEffect(() => {
-        if(isFirstInput.current){
-            isFirstInput.current = search === ''
-            return
-        }
-
-        if (search === ''){
-            setError('You can not search for an empty movie' )
-            return
-        }
-
-        if (search.length < 3){
-            setError('Search have to be at least 3 characters long')
-        }
-
-        setError(null)
-    } ,[search])
-
-    return { search, updateSearch, error }
-}
+import { useSearch } from './hooks/useSearch'
+import debounce from 'just-debounce-it'
 
 export function App () {
+    const [ sort, setSort ] = useState(false)
     const { search, updateSearch, error } = useSearch()
-    const { movies, getMovies } = useMovies({ search })
+    const { movies, loading, getMovies } = useMovies({ search, sort })
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        getMovies()
+
+    const debouncedGetMovies = debounce(search => {
+        console.log('search', search)
+        getMovies({ search })
+    }, 500)
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        getMovies({ search })
+    }
+
+    const handleSort = () => {
+        setSort(!sort)
     }
 
     const handleChange = (event) => {
-        updateSearch(event.target.value)
+        const newSearch = event.target.value
+        updateSearch(newSearch)
+        debouncedGetMovies(newSearch)
     }
-
+    
     return (
         <div className='page'>
-
             <header>
-                <h1>Buscador De Peliculas</h1>
+                <h1>Buscador De Películas</h1>
                 <form className='form' onSubmit={handleSubmit}>
-                    <input onChange={handleChange} value={search} name='query' placeholder='Search Movie' />
-                    <button type='submit'>Search</button>
+                    <input onChange={handleChange} value={search} name='query' placeholder='Inception, Willy Wonka, etc'/>
+                    <input type='checkbox' onChange={handleSort} checked={sort} />
+                    <button type="submit">Search Movie</button>
                 </form>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {error && <p style={{color: 'red'}}>{error}</p>}
             </header>
 
             <main>
-                <Movies movies={movies} />
+                {
+                    loading ? <p>Loading Movies...</p> : <Movies movieResults={movies}/>
+                }
             </main>
         </div>
     )
