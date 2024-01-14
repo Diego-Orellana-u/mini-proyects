@@ -1,49 +1,32 @@
-import { CartIcon, ClearCartIcon } from "./Icons";
+import { useId, useState } from 'react'
 import './Cart.css'
-import { useId } from "react";
-import { useCart } from "../hooks/useCart";
-
-function CartItem ({ thumbnail, price, title, quantity, addToCart }) {
-    return (
-        <li>
-            <img 
-                src={thumbnail}
-                alt={title}
-            />
-            <div>
-                <strong>{title}</strong> - ${price}
-            </div>
-
-            <div>
-                <small>
-                    Qty: {quantity}
-                </small>
-                <button onClick={addToCart}>+</button>
-            </div>
-        </li>
-    )
-}
+import { CartIcon, ClearCartIcon, RemoveFromCartIcon } from './Icons'
 
 export function Cart () {
     const cartCheckboxId = useId()
-    const { cart, clearCart, addToCart  }= useCart()
+
     return (
         <>
-            <label className="cart-button" htmlFor={cartCheckboxId}>
+            <label className='cart-button' htmlFor={cartCheckboxId}>
                 <CartIcon />
             </label>
-            <input id={cartCheckboxId} type="checkbox" hidden />
-            
-            <aside className="cart">
+            <input id={cartCheckboxId} type='checkbox' hidden />
+            <aside className='cart'>
                 <ul>
-                    {
-                        cart.map(product => (
-                            <CartItem key={product.id} {...product} addToCart={() => addToCart(product)}/>
-                        ))
-                    }
+                    <li>
+                        <img src='https://cdn.dummyjson.com/product-images/2/thumbnail.jpg' alt='Iphone' />
+                        <div>
+                            <strong>Iphone X</strong> - $100
+                        </div>
+                        <footer>
+                            <small>
+                                Qty: 1
+                            </small>
+                            <button>+</button>
+                        </footer>
+                    </li>
                 </ul>
-
-                <button onClick={clearCart}>
+                <button>
                     <ClearCartIcon />
                 </button>
             </aside>

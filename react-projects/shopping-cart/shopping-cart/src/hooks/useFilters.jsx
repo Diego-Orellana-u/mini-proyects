@@ -1,19 +1,17 @@
-import { useState, useContext } from "react"
-import { FiltersContext } from "../context/filters"
+import { useContext } from "react"
+import { FilterContext } from "../context/filters"
 
-export function useFilters () {
-    const { filters, setFilters } = useContext(FiltersContext)
+export const useFilters = () => {
+    const { filters, setFilters} = useContext(FilterContext)
 
     const filterProducts = (products) => {
-      return products.filter(product => {
+    return products.filter(product => {
         return (
-          product.price >=filters.minPrice &&
-          (
-            filters.category === 'all' || 
-            product.category === filters.category
-          )
+        product.price >= filters.minPrice &&
+        (filters.category === 'all' || product.category === filters.category) 
         )
-      })
-    }
-    return { filterProducts, setFilters, filters }
-  }
+    })}
+
+    return { filterProducts, filters, setFilters }
+
+}

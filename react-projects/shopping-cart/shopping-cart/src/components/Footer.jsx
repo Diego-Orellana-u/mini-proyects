@@ -1,6 +1,6 @@
-import './Footer.css'
 import { useFilters } from '../hooks/useFilters'
 import { useCart } from '../hooks/useCart'
+import './Footer.css'
 
 export function Footer () {
   const { filters } = useFilters()
@@ -8,9 +8,9 @@ export function Footer () {
 
   return (
     <footer className='footer'>
-        {/* {
-          JSON.stringify(cart, null, 2)
-        } */}
+      {
+        JSON.stringify(cart, null, 2)
+      }
     </footer>
   )
 }

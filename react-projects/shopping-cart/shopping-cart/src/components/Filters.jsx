@@ -3,47 +3,54 @@ import { useId } from 'react'
 import { useFilters } from '../hooks/useFilters'
 
 export function Filters () {
-    const minPriceFilterId = useId()
-    const categoryFilterId = useId()
-    const { filters, setFilters} = useFilters()
+    const { filters, setFilters } = useFilters()
+    const rangeId = useId()
+    const categoryId = useId()
 
-    const handleChangeMinPrice = (e) => {
+    const handleMoneyFilter = (e) => {
         setFilters(prevState => ({
-            ...prevState,
+            ...prevState, 
             minPrice: e.target.value
         }))
     }
 
-    const handleChangeCategory = (e) => {
+    const handleCategoryFilter = (e) => {
         setFilters(prevState => ({
             ...prevState,
             category: e.target.value
         }))
     }
-
     return (
         <section className="filters">
             <div>
-                <label htmlFor={minPriceFilterId}>Minimum Price</label>
-                <input
-                    type='range'
-                    id={minPriceFilterId}
+                <label htmlFor={rangeId}>
+                    Price starting at:
+                </label>
+                <input 
+                    id={rangeId}
+                    type="range"
                     min='0'
                     max='1000'
-                    onChange={handleChangeMinPrice}
-                    value={filters.minPrice}
+                    onChange={handleMoneyFilter}
                 />
-                <span>${filters.minPrice}</span>
+                <span>
+                    ${filters.minPrice}
+                </span>
             </div>
 
             <div>
-                <label htmlFor={categoryFilterId}>Category</label>
-                <select id={categoryFilterId} onChange={handleChangeCategory}>
-                    <option value='all'>All</option>
-                    <option value='laptops'>Laptops</option>
-                    <option value='smartphones'>SmartPhones</option>
-                </select>
+                <form>
+                    <label htmlFor={categoryId}> Category </label>
+                    <select id={categoryId} name='categories' onChange={handleCategoryFilter}>
+                        <option value='all'>All</option>
+                        <option value='laptops'>Laptops</option>
+                        <option value='smartphones'>SmartPhones</option>
+                        <option value='groceries'>Groceries</option>
+                    </select>
+                </form>
+
             </div>
+
         </section>
     )
 }
