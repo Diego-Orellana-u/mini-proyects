@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
 import { Movies } from './components/movies'
 import './assets/index.css'
-import { useState} from 'react'
+import { useState, useMemo } from 'react'
 import { useMovies } from './hooks/useMovies'
 import { useSearch } from './hooks/useSearch'
 import debounce from 'just-debounce-it'
@@ -12,10 +11,12 @@ export function App () {
     const { movies, loading, getMovies } = useMovies({ search, sort })
 
 
-    const debouncedGetMovies = debounce(search => {
+    const debouncedGetMovies = useMemo(() => 
+        debounce(search => {
         console.log('search', search)
         getMovies({ search })
-    }, 500)
+    }, 300)
+    ,[getMovies])
 
     const handleSubmit = (e) => {
         e.preventDefault()

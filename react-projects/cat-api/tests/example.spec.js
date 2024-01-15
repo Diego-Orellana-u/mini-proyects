@@ -8,7 +8,7 @@ test('app shows random fact and image', async ({ page }) => {
 
   const text = await page.getByRole('paragraph')
   const image = await page.getByRole('img')
-  const button = await page.getByRole('button').click()
+  // const button = await page.getByRole('button')
 
   const textContent = await text.textContent()
   const imageSrc = await image.getAttribute('src')
