@@ -6,7 +6,7 @@ export function useSyno() {
     const [ word, setWord ] = useState(null)
     const [ synonysms, setSynonyms ] = useState(null)
     
-    const API_LINK = `https://api.datamuse.com/words?ml=${word}`
+    const API_LINK = `https://api.datamuse.com/words?rel_syn=${word}`
 
     function handleSubmit(e){
         e.preventDefault()
@@ -24,5 +24,5 @@ export function useSyno() {
           })
     },[word])
 
-    return { synonysms, word, setWord, handleSubmit }
+    return { synonysms, word, handleSubmit }
 }

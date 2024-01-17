@@ -3,19 +3,19 @@ import { ColorRectangle } from './components/ColorRectangle'
 import { HexButton } from './components/HexButton'
 import './App.css'
 
+function createRandomColors () {
+  let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,'a','b','c','d','e','f']
+  let hexcode ='#'
+  for(let i = 0; i < 6; i++){
+    let randomHexCharacter = Math.floor(Math.random() * 16)
+    hexcode += numbers[randomHexCharacter]
+  }
+  return hexcode
+}
+
 export default function App() {
   const [ colors, setColors ] = useState([])
   const [ answer, setAnswer ] = useState(null)  
-
-  function createRandomColors () {
-    let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,'a','b','c','d','e','f']
-    let hexcode ='#'
-    for(let i = 0; i < 6; i++){
-      let random = Math.floor(Math.random() * 16)
-      hexcode += numbers[random]
-    }
-    return hexcode
-  }
 
   function loadRandomColors () {
     let color1 = createRandomColors()
@@ -63,6 +63,7 @@ export default function App() {
           )
         }
       </div>
+
       <div>
         <p className='answer'>{answer}</p>
       </div>

@@ -6,7 +6,7 @@ export function SynonymsList({ synonysms, word }) {
         <ul style={{textAlign: 'left'}}>
           { synonysms &&
             synonysms.map(word => 
-              <li key={word.score}>{word.word}</li>
+              <li key={word.word}>{word.word}</li>
             )
           }
         </ul>

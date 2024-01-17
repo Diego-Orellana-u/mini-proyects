@@ -6,7 +6,7 @@ import { SynonymsList } from './components/SynonymsList'
 export default function App() {
 
   const { handleSubmit, synonysms, word } = useSyno()
-
+  console.log(synonysms)
   return (
     <>
       <h1>Please Write A Word</h1> 
