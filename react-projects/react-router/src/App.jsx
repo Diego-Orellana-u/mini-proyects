@@ -6,11 +6,18 @@ import './App.css'
 import HomePage from './pages/Home'
 import AboutPage from './pages/About.jsx'
 
+const routes = [
+  {
+    path: '/',
+    Component: HomePage
+  },
+  {
+    path: '/about',
+    Component: AboutPage
+  }
+]
 
-
-
-
-export default function App() {
+function Router ({ routes = [], defaultComponent: DefaultComponent = () => null }) {
   const [ currentPath, setCurrentPath ] = useState(window.location.pathname)
 
   useEffect(() => {
@@ -27,10 +34,14 @@ export default function App() {
     }
   },[])
 
+  const Page = routes.find(({ path }) => path === currentPath)?.component
+}
+
+
+export default function App() {
   return (
     <main>
-      {currentPath === '/' && <HomePage navigate={navigate}/>}
-      {currentPath === '/about' && <AboutPage />}
+      <Router routes={routes} />
     </main>
   )
 }
