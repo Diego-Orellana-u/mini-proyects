@@ -1,55 +1,71 @@
-import { Movies } from './components/movies'
 import './assets/index.css'
-import { useState, useMemo } from 'react'
+import './assets/app.css'
+import React, { useEffect, useState } from 'react'
+import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies'
-import { useSearch } from './hooks/useSearch'
-import debounce from 'just-debounce-it'
+
 
 export function App () {
-    const [ sort, setSort ] = useState(false)
-    const { search, updateSearch, error } = useSearch()
-    const { movies, loading, getMovies } = useMovies({ search, sort })
+    const [ query, setQuery ] = useState('')
+    const { movies: mappedMovies} = useMovies()
+    const [ error, setError ] = useState('')
 
+    const MOVIE_LIST_API = `http://www.omdbapi.com/?apikey=2857aebf&s=${query}`
 
-    const debouncedGetMovies = useMemo(() => 
-        debounce(search => {
-        console.log('search', search)
-        getMovies({ search })
-    }, 300)
-    ,[getMovies])
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        getMovies({ search })
-    }
-
-    const handleSort = () => {
-        setSort(!sort)
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        console.log(query)
     }
 
     const handleChange = (event) => {
-        const newSearch = event.target.value
-        updateSearch(newSearch)
-        debouncedGetMovies(newSearch)
+        const newQuery = event.target.value
+        if(newQuery.startsWith(' ')) return
+       setQuery(newQuery) 
+
+        if(query === ''){
+            setError(`We couldn't find movies by this name`)
+            return
+        }
+
+        if(query.match(/^\d+$/ )){
+            setError(`You can't search a number`)
+            return
+        }
+
+        if(query.length < 3){
+            setError(`Search has to have at least three characters`)
+            return
+        }
+
+        setError(null)
     }
-    
+
+    useEffect(() => {
+        
+        fetch(MOVIE_LIST_API)
+            .then(res => res.json())
+            .then(data => {
+                const movieList = data.Search
+                console.log(movieList)
+            })
+    },[query])
+
     return (
         <div className='page'>
             <header>
-                <h1>Buscador De Películas</h1>
+                <h1>Movie Searcher</h1>
                 <form className='form' onSubmit={handleSubmit}>
-                    <input onChange={handleChange} value={search} name='query' placeholder='Inception, Willy Wonka, etc'/>
-                    <input type='checkbox' onChange={handleSort} checked={sort} />
-                    <button type="submit">Search Movie</button>
+                    <input onChange={handleChange} value={query} name='query' placeholder='Batman, Avengers, etc' />
+                    <button>Search Movie</button>
                 </form>
                 {error && <p style={{color: 'red'}}>{error}</p>}
             </header>
-
             <main>
-                {
-                    loading ? <p>Loading Movies...</p> : <Movies movieResults={movies}/>
-                }
+                <ul className='movies'>
+                    <Movies movies={mappedMovies}/> 
+                </ul>
             </main>
         </div>
+        
     )
 }
