@@ -1,68 +1,86 @@
 import './assets/index.css'
 import './assets/app.css'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { Movies } from './components/Movies'
 import { useMovies } from './hooks/useMovies'
 
+function useSearch () {
+    const [ search, updateSearch ] = useState('')
+    const [ error, setError ] = useState('')
+    const isFirstInput = useRef(true)
+
+    useEffect(() => {
+        if(isFirstInput.current){
+            isFirstInput.current = search === ''
+            return
+        }
+        if(search === ''){
+            setError(`We couldn't find movies by this name`)
+            return
+        }
+    
+        if(search.match(/^\d+$/ )){
+            setError(`You can't search a number`)
+            return
+        }
+    
+        if(search.length < 3){
+            setError(`Search has to have at least three characters`)
+            return
+        }
+        setError(null)
+    },[search])
+
+    return { search, updateSearch, error }
+
+}
+
+let user = {
+    name: 'Diego',
+    lastName: 'Orellana',
+    traits: {
+        character: 'kind, gentle, assertive, responsible',
+        physical: 'muscular',
+        blabla: 'hello'
+    }
+}
+// console.log(user)
+let clone = {}
+
+Object.assign(clone, user)
+
+console.log(clone.traits === user.traits)
+
+console.log(clone)
+console.log(user)
 
 export function App () {
-    const [ query, setQuery ] = useState('')
-    const { movies: mappedMovies} = useMovies()
-    const [ error, setError ] = useState('')
-
-    const MOVIE_LIST_API = `http://www.omdbapi.com/?apikey=2857aebf&s=${query}`
+    const { search, updateSearch, error } = useSearch()
+    const { movies, getMovies } = useMovies({search})
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        console.log(query)
+        getMovies()
     }
 
     const handleChange = (event) => {
         const newQuery = event.target.value
-        if(newQuery.startsWith(' ')) return
-       setQuery(newQuery) 
-
-        if(query === ''){
-            setError(`We couldn't find movies by this name`)
-            return
-        }
-
-        if(query.match(/^\d+$/ )){
-            setError(`You can't search a number`)
-            return
-        }
-
-        if(query.length < 3){
-            setError(`Search has to have at least three characters`)
-            return
-        }
-
-        setError(null)
+        updateSearch(newQuery)    
     }
-
-    useEffect(() => {
-        
-        fetch(MOVIE_LIST_API)
-            .then(res => res.json())
-            .then(data => {
-                const movieList = data.Search
-                console.log(movieList)
-            })
-    },[query])
 
     return (
         <div className='page'>
             <header>
                 <h1>Movie Searcher</h1>
                 <form className='form' onSubmit={handleSubmit}>
-                    <input onChange={handleChange} value={query} name='query' placeholder='Batman, Avengers, etc' />
+                    <input onChange={handleChange} value={search} name='query' placeholder='Batman, Avengers, etc' />
                     <button>Search Movie</button>
                 </form>
                 {error && <p style={{color: 'red'}}>{error}</p>}
             </header>
             <main>
                 <ul className='movies'>
-                    <Movies movies={mappedMovies}/> 
+                    <Movies movies={movies}/> 
                 </ul>
             </main>
         </div>

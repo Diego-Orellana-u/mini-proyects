@@ -1,7 +1,11 @@
 import { useState } from 'react'
+import noResponse from '../mocks/noResponse.json'
 
-export function useMovies() {
-    const [ movies, setMovies ] = useState(null)
+export function useMovies({ search }) {
+    const [ responseMovies, setResponseMovies ] = useState([])
+
+    const movies = responseMovies.Search
+
     const mappedMovies = movies?.map(movie => ({
         id: movie.imdbID,
         title: movie.Title,
@@ -9,5 +13,19 @@ export function useMovies() {
         poster: movie.Poster
     }))
 
-    return { movies: mappedMovies }
+    const MOVIE_LIST_API = `http://www.omdbapi.com/?apikey=2857aebf&s=${search}`
+
+    const getMovies = () => {
+        if(search) {
+            fetch(MOVIE_LIST_API)
+            .then(res => res.json())
+            .then(data => {
+                setResponseMovies(data)
+            })
+        }else {
+            setResponseMovies(noResponse)
+        }
+    }
+
+    return { movies: mappedMovies, getMovies }
 }
