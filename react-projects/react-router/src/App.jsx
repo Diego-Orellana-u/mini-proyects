@@ -1,47 +1,26 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { EVENTS } from './consts'
-import { navigate } from './Link.jsx'
 import './App.css'
 import HomePage from './pages/Home'
 import AboutPage from './pages/About.jsx'
+import { Router } from './Router.jsx'
+import Page404 from './pages/404.jsx'
+import SearchPage from './pages/Search.jsx'
+import { Route } from './Route.jsx'
 
-const routes = [
+const appRoutes = [
   {
-    path: '/',
-    Component: HomePage
-  },
-  {
-    path: '/about',
-    Component: AboutPage
+    path: '/search/:query',
+    Component: SearchPage
   }
-]
-
-function Router ({ routes = [], defaultComponent: DefaultComponent = () => null }) {
-  const [ currentPath, setCurrentPath ] = useState(window.location.pathname)
-
-  useEffect(() => {
-    const onLocationChange = () =>{
-      setCurrentPath(window.location.pathname)
-    }
-
-    window.addEventListener(EVENTS.PUSHSTATE, onLocationChange)
-    window.addEventListener(EVENTS.POPSTATE, onLocationChange)
-
-    return () => {
-      window.removeEventListener(EVENTS.PUSHSTATE, onLocationChange)
-      window.removeEventListener(EVENTS.POPSTATE, onLocationChange)
-    }
-  },[])
-
-  const Page = routes.find(({ path }) => path === currentPath)?.component
-}
+] 
 
 
 export default function App() {
   return (
     <main>
-      <Router routes={routes} />
+      <Router defaultComponent={Page404}>
+        <Route path='/' Component ={HomePage} />
+        <Route path='about' Component ={AboutPage} />
+      </Router>
     </main>
   )
 }

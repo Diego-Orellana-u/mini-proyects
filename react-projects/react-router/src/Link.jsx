@@ -16,7 +16,9 @@ export function Link ({ target, to, ...props }) {
         if(isMainEvent && isManageableEvent && !isModifiedEvent){
             event.preventDefault()
             navigate(to)
+            window.scrollTo(0, 0)
         }
+
 
     }
 
