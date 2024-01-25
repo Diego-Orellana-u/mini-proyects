@@ -10,6 +10,10 @@ const LazyAboutPage = lazy(() => import('./pages/About.jsx'))
 
 const appRoutes = [
   {
+    path: '/:lang/about',
+    Component: LazyAboutPage
+  },
+  {
     path: '/search/:query',
     Component: SearchPage
   }
@@ -28,3 +32,4 @@ export default function App() {
     </main>
   )
 }
+
