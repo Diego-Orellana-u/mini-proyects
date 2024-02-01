@@ -1,9 +1,13 @@
-import { useId } from "react"
+import { useContext, useId } from "react"
 import { CartIcon, ClearCartIcon, RemoveFromCartIcon } from "./Icons"
 import './Cart.css'
+import { CartContext } from "../context/cart"
 
 export function Cart () {
     const cartCheckboxId = useId()
+
+    const { cart, addToCart, clearCart } = useContext(CartContext)
+
     return(
         <>
             <label className="cart-button" htmlFor={cartCheckboxId}>
@@ -13,24 +17,29 @@ export function Cart () {
             
             <aside className="cart">
                 <ul>
-                    <li>
-                        <img src='https://i.dummyjson.com/data/products/2/thumbnail.jpg' alt="Iphone" />
-                        <div>
-                            <strong>Iphone X</strong> - $300
-                        </div>
+                    {
+                        cart.map(product => {
+                            return(
+                                <li key={product.id}>
+                                    <img src={product.thumbnail} alt={product.title} />
+                                    <div>
+                                        <strong>{product.title}</strong> - ${product.price}
+                                    </div>
 
-                        <footer>
-                            <small>
-                                Qty: 1
-                            </small>
-                            <button>
-                                +
-                            </button>
-                        </footer>
-
-                    </li>
+                                    <footer>
+                                        <small>
+                                            Qty: {product.quantity}
+                                        </small>
+                                        <button onClick={() => addToCart(product)}>
+                                            +
+                                        </button>
+                                    </footer>
+                                </li>
+                            )
+                        })
+                    }
                 </ul>
-                <button>
+                <button onClick={() => clearCart()}>
                     <ClearCartIcon />
                 </button>
             </aside>
