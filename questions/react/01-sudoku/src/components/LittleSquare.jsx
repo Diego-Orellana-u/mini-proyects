@@ -1,6 +1,9 @@
+import { useBoardContext } from '../hooks/useBoardContext'
 import './LittleSquare.css'
 
-export function LittleSquare({ position, positionLit, setBoard, board, error }){
+export function LittleSquare({ position, positionLit}){
+
+    const { board, setBoard, error } = useBoardContext()
 
     const handleSubmit = (e) => {
         e.preventDefault()

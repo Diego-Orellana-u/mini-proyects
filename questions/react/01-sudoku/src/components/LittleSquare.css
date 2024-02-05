@@ -22,16 +22,8 @@ textarea:focus, input:focus{
 }
 
 .label{
-    width: 55px;
-    height: 55px;
-    min-width: 55px;
     font-size: 55px;
-    border: none;
-    text-align: center;
-    -webkit-appearance: none;
     color: black;
-    z-index: 10;
-    margin-top: -16px;   
 }
 
 .form{

@@ -1,19 +1,22 @@
 import { LittleSquare } from "./LittleSquare";
 import './BigSquare.css'
+import { useId } from "react";
+import { useBoardContext } from "../hooks/useBoardContext";
 
-export function Row({ position, setBoard, board,error}){
+export function Row({ position }){
+    const { board } = useBoardContext()
+
+    const rowId = useId()
 
     return(
         <div className="row">
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={0} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={1} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={2} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={3} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={4} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={5} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={6} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={7} error={error} />
-            <LittleSquare position={position} setBoard={setBoard} board={board} positionLit={8} error={error} />
+            {
+                board.map((square,index) => {
+                    return(
+                        <LittleSquare position={position} key={`${rowId}--${index}`} positionLit={index}/>
+                    )
+                })
+            }
         </div>
     )
 }

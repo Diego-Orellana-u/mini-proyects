@@ -1,44 +1,31 @@
-import { useState } from 'react'
+import { useId } from 'react'
 import './App.css'
 import { Row } from './components/Row'
 import { obtainSolution } from './js/obtainSolution'
+import { createBoardSolution } from './js/createBoardSoluton'
+import { useBoardContext } from './hooks/useBoardContext'
 
 
 export default function App() {
-  const [ board, setBoard ] = useState([
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0],
-  ])
 
-  const [ error, setError ] = useState(null)
+  const { board, setBoard, error, setError } = useBoardContext()
+
+  const idTest = useId()
   
-  async function handleSolution(){
-    const newBoard = board.map(arr => arr.join('')).join('')
+  async function getSolution(){
+    const userInputs = board.map(arr => arr.join('')).join('')
 
-    const solutionData = await obtainSolution(newBoard)
+    const solutionData = await obtainSolution(userInputs)
+    const boardSolution = createBoardSolution(board, solutionData)
+    setBoard(boardSolution)
 
     if(solutionData.status === 'error'){
       setError(false)
     }else if(solutionData.status === 'OK'){
       setError(true)
     }
-
-    const boardSolution = structuredClone(board)
-    let k = 0
-    for(let i = 0; i < 9; i++){
-      for(let j = 0; j < 9; j++){
-        boardSolution[i][j] = solutionData.solution[k]
-        k++
-      }
-    }
-    setBoard(boardSolution)
+    
+    console.log(boardSolution) //debugging
   }
 
   return (
@@ -47,14 +34,13 @@ export default function App() {
         {
           board.map((row, index) => {
             return(
-              // here key shouldn't be index, it could create unexpected behaviour.
-              <Row position={index} key={index} setBoard={setBoard} board={board} error={error}/>
+              <Row position={index} key={`${idTest}--${index}`} setBoard={setBoard} board={board} error={error}/>
             )
           })
         }
       </div>
       <div>
-        <button className='check-button' onClick={handleSolution}>Check Solution</button>
+        <button className='check-button' onClick={getSolution}>Check Solution</button>
       </div>
     </>
   )
