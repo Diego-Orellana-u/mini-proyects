@@ -25,9 +25,9 @@ export default function App() {
     const solutionData = await obtainSolution(newBoard)
 
     if(solutionData.status === 'error'){
-      setError(`Error, ${solutionData.message}`)
+      setError(false)
     }else if(solutionData.status === 'OK'){
-      setError(`Correct!`)
+      setError(true)
     }
 
     const boardSolution = structuredClone(board)
@@ -45,20 +45,15 @@ export default function App() {
     <>
       <div className='board'>
         {
-          
+          board.map((row, index) => {
+            return(
+              // here key shouldn't be index, it could create unexpected behaviour.
+              <Row position={index} key={index} setBoard={setBoard} board={board} error={error}/>
+            )
+          })
         }
-        <Row position={0} setBoard={setBoard} board={board} error={error}/>
-        <Row position={1} setBoard={setBoard} board={board} error={error}/>
-        <Row position={2} setBoard={setBoard} board={board} error={error}/>
-        <Row position={3} setBoard={setBoard} board={board} error={error}/>
-        <Row position={4} setBoard={setBoard} board={board} error={error}/>
-        <Row position={5} setBoard={setBoard} board={board} error={error}/>
-        <Row position={6} setBoard={setBoard} board={board} error={error}/>
-        <Row position={7} setBoard={setBoard} board={board} error={error}/>
-        <Row position={8} setBoard={setBoard} board={board} error={error}/>
       </div>
       <div>
-        <p>Your result: {error}</p>
         <button className='check-button' onClick={handleSolution}>Check Solution</button>
       </div>
     </>
