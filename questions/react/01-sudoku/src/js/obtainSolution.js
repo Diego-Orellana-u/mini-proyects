@@ -1,6 +1,6 @@
-export async function obtainSolution(newBoard){
+export async function obtainSolution(userSolutions){
     const data = {
-      sudoku: [newBoard]
+      sudoku: [userSolutions]
     };
     const options = {
       method: 'POST',

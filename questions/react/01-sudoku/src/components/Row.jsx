@@ -13,7 +13,7 @@ export function Row({ position }){
             {
                 board.map((square,index) => {
                     return(
-                        <LittleSquare position={position} key={`${rowId}--${index}`} positionLit={index}/>
+                        <LittleSquare positionY={position} positionX={index} key={`${rowId}--${index}`}/>
                     )
                 })
             }

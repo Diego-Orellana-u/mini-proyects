@@ -1,7 +1,7 @@
 import { useBoardContext } from '../hooks/useBoardContext'
 import './LittleSquare.css'
 
-export function LittleSquare({ position, positionLit}){
+export function LittleSquare({ positionY, positionX}){
 
     const { board, setBoard, error } = useBoardContext()
 
@@ -10,7 +10,7 @@ export function LittleSquare({ position, positionLit}){
         const data = e.target.value
         const newBoard = structuredClone(board)
         setBoard(newBoard,
-                newBoard[position][positionLit] = data)
+                newBoard[positionY][positionX] = data)
     }
 
     return(
@@ -18,7 +18,7 @@ export function LittleSquare({ position, positionLit}){
             <form onChange={handleSubmit} className='form'>
                 <label className="label" htmlFor="mini-square">
                     {
-                        error && board[position][positionLit]
+                        error && board[positionY][positionX]
                     }
                 </label>
                 {
