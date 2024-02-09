@@ -1,0 +1,1 @@
+-When the user clicks somewhere in the page, create a circle where he clicked
