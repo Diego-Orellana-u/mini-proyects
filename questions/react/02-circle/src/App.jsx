@@ -32,23 +32,26 @@ export default function App() {
     setLastCircle(lastCircleCopy)
     lastChild.remove()
   }
-  console.log(lastCircle)
-
+  
   const handleRedo = () => {
     let page = document.querySelector('.page')
     let redoChild = lastCircle[lastCircle.length - 1]
-
+    
     let childNode = new DOMParser().parseFromString(redoChild, 'text/html').body.lastChild
     page.appendChild(childNode)
+    
+    setLastCircle(lastCircle.filter(node => node != redoChild))
   }
   
+  console.log(lastCircle)
 
   return (
     <>
+    
       <button className='button' onClick={handleUndo}>
         UNDO
       </button>
-      <button className='button' onClick={handleRedo}>
+      <button className='button' style={{backgroundColor: lastCircle.length > 0 ? 'gray' : '#3a3a3ab8'}} onClick={lastCircle.length > 0 ? handleRedo : undefined}>
         REDO
       </button>
       <div className='page' onClick={handleClick}>
