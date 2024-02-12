@@ -56,13 +56,15 @@ export default function App(){
 
     let newCards = cards.map((card, index) => ({
       ...card,
-      code: shuffledArr[index]
+      code: shuffledArr[index],
+      visible: false
     }))
 
     setCards(newCards)
   }
 
   const handleSelect = (e, index) => {
+    if(cards[index].visible) return
     setSelected(prevState => ([...prevState, index]))
 
     let newCards = cards.map((card, indexa) => ({
@@ -73,17 +75,22 @@ export default function App(){
     setCards(newCards)
 
   }
-  console.log(cards)
-  console.log(selected)
 
   useEffect(() => {
     let aCard = cards[selected[selected.length - 1]]
     let bCard = cards[selected[selected.length - 2]]
+
+    console.log(aCard)
+
     if(!aCard) return
     if(selected.length % 2 != 0) return
     
     if(aCard.code != bCard.code){
-      console.log("hola")
+      let newCards = cards.map(card => ({
+        ...card,
+        visible:(card.id == aCard.id || card.id == bCard.id) ? false : card.visible
+      }))
+      setTimeout(() => {setCards(newCards)}, 500)
     }
   },[selected])
 
