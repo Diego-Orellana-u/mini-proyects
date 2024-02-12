@@ -1,58 +1,20 @@
 import { useState } from 'react'
-import './App.css'
 import { useId } from 'react'
-import { useEffect } from 'react'
+import './App.css'
+import { useCards } from './hooks/useCards'
+import { pickRandomLetters } from './logic/pickRandomLetters'
+import { randomizeArray } from './logic/randomizeArray'
+
 
 export default function App(){
-  const [ cards, setCards ] = useState([
-    {id: 0 , code: undefined, visible: false},
-    {id: 1, code: undefined, visible: false},
-    {id: 2, code: undefined, visible: false},
-    {id: 3, code: undefined, visible: false},
-    {id: 4, code: undefined, visible: false},
-    {id: 5, code: undefined, visible: false},
-    {id: 6, code: undefined, visible: false},
-    {id: 7, code: undefined, visible: false},
-    {id: 8, code: undefined, visible: false},
-    {id: 9, code: undefined, visible: false},
-    {id: 10, code: undefined, visible: false},
-    {id: 11, code: undefined, visible: false},
-    {id: 12, code: undefined, visible: false},
-    {id: 13, code: undefined, visible: false},
-    {id: 14, code: undefined, visible: false},
-    {id: 15, code: undefined, visible: false},
-  ])
 
   const [ selected, setSelected ] = useState([])
-
-  function pickRandomLetters(num){
-    const letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","u","v","w","x","y","z"];
-    let randomLetters = []
-
-    for(let i = 0; i < num; i++){
-      const random = Math.floor(Math.random() * letters.length)
-      if(randomLetters.includes(letters[random])){
-        i--
-        continue 
-      }
-      randomLetters.push(letters[random])
-    }
-    return randomLetters
-  }
-
-  function randomizeArr(array){
-    for(let i = array.length - 1; i > 0;i--){
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array
-  }
+  const { cards, setCards } = useCards({selected})
 
   const handleStart = () => {
     let initialArr = pickRandomLetters(8)
-    let duplicatedArr = [...initialArr,...initialArr]
     
-    let shuffledArr = randomizeArr(duplicatedArr)
+    let shuffledArr = randomizeArray([...initialArr,...initialArr])
 
     let newCards = cards.map((card, index) => ({
       ...card,
@@ -63,8 +25,14 @@ export default function App(){
     setCards(newCards)
   }
 
-  const handleSelect = (e, index) => {
-    if(cards[index].visible) return
+  const handleSelect = (index) => {
+    if(!cards[index].code) return
+    if(cards[index].visible) return //prevent selecting an already guessed card
+
+    if(selected.length >= 2 ){ 
+      setSelected([])
+    }
+
     setSelected(prevState => ([...prevState, index]))
 
     let newCards = cards.map((card, indexa) => ({
@@ -73,26 +41,7 @@ export default function App(){
     }))
 
     setCards(newCards)
-
   }
-
-  useEffect(() => {
-    let aCard = cards[selected[selected.length - 1]]
-    let bCard = cards[selected[selected.length - 2]]
-
-    console.log(aCard)
-
-    if(!aCard) return
-    if(selected.length % 2 != 0) return
-    
-    if(aCard.code != bCard.code){
-      let newCards = cards.map(card => ({
-        ...card,
-        visible:(card.id == aCard.id || card.id == bCard.id) ? false : card.visible
-      }))
-      setTimeout(() => {setCards(newCards)}, 500)
-    }
-  },[selected])
 
   const cardId = useId()
 
@@ -102,7 +51,7 @@ export default function App(){
         {
           cards.map((card, index) => {
             return(
-              <div key={`${cardId} - ${index}`} className='card'  onClick={(e) => handleSelect(e,index)}>
+              <div key={`${cardId} - ${index}`} className='card'  onClick={(e) => handleSelect(index)}>
                 <span className='code' style={{display: card?.visible ? "block" : "none"}}>{card.code}</span>
               </div>
             )
