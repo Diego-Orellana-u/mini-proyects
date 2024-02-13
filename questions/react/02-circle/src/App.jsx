@@ -13,9 +13,12 @@ export default function App() {
     let container = document.querySelector(".page")
     let circle = document.createElement("div")
     circle.classList.add('circle')
+
     container.appendChild(circle)
+
     circle.style.left = `${mousePosition.x - 17}px`
     circle.style.top = `${mousePosition.y - 60}px`
+
   }
 
   useEffect(() => {
@@ -26,6 +29,9 @@ export default function App() {
   const handleUndo = () => {
     let page = document.querySelector('.page')
     let lastChild = page.lastChild
+
+    if(!lastChild) return false
+    
     let lastToStr = lastChild.outerHTML
 
     let lastCircleCopy = [...lastCircle, lastToStr ]
@@ -42,13 +48,10 @@ export default function App() {
     
     setLastCircle(lastCircle.filter(node => node != redoChild))
   }
-  
-  console.log(lastCircle)
 
   return (
     <>
-    
-      <button className='button' onClick={handleUndo}>
+      <button className='button'style={{backgroundColor: mousePosition.x ? 'gray' : '#3a3a3ab8'}} onClick={mousePosition.x ? handleUndo : undefined}>
         UNDO
       </button>
       <button className='button' style={{backgroundColor: lastCircle.length > 0 ? 'gray' : '#3a3a3ab8'}} onClick={lastCircle.length > 0 ? handleRedo : undefined}>

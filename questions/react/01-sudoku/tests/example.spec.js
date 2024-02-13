@@ -10,9 +10,16 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Sudoku Solver/);
 });
 
-test('Shows board and h1', async({ page }) => {
+test('Shows heading', async({ page }) => {
   await page.goto(LOCALHOST_URL);
 
   const text = await page.getByRole('heading', { name: 'Sudoku Solver'})
   await expect(text).toBeVisible()
+
+})
+
+test('Shows Board', async({ page }) => {
+  await page.goto(LOCALHOST_URL)
+
+  const board = await page.getBy
 })
