@@ -9,7 +9,7 @@ let data = {
 
 function CountryCapitalGame(){
 
-  const [ order, setOrder ] = useState([])
+  const [ order, setOrder ] = useState(undefined)
   const [ selected, setSelected ] = useState([])
   const [ error, setError ] = useState([])
 
@@ -28,7 +28,7 @@ function CountryCapitalGame(){
     newSelected.push(btn)
 
     setSelected(newSelected)
-    if(error.length == 2) setError([])
+    setError([])
   }
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function CountryCapitalGame(){
         (firResponse.includes(firSelected) && firResponse.includes(secSelected)) ||
         (secResponse.includes(firSelected) && secResponse.includes(secSelected))
         ){
-        setOrder(order.filter(btn => btn != firSelected && btn != secSelected))
+        setOrder(order.filter(btn => btn !== firSelected && btn !== secSelected))
       }else{
         setError([firSelected, secSelected])
       }
@@ -61,9 +61,13 @@ function CountryCapitalGame(){
         <button onClick={handleStart}>Start game</button>
       </div>
       {
+        !(typeof(order) === 'undefined') &&
         order.map((btn, index) => (
           <button style={{ backgroundColor: error.includes(btn) ? 'red' : selected.includes(btn) ? '#0096FF' : '#1a1a1a'}} key={`${btnId} - ${index}`} onClick={() => handleSelected(btn)}>{btn}</button>     
         ))
+      }
+      {
+        (typeof(order) !== 'undefined' && order.length == 0) && <p style={{color: 'green'}}>Congratulations!</p>
       }
     </>
 
