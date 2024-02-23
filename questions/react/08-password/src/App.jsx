@@ -8,7 +8,9 @@ export default function App() {
   const [ userInput, setUserInput ] = useState('')
 
   function askPasscode(){
-    const secretPasscode = prompt('Write your secret passcode', 0)
+    const secretPasscode = prompt('Write your secret passcode. Max 4 characters')
+    
+    if(secretPasscode.length > 4) askPasscode()
 
     setPasscode(secretPasscode)
   }
@@ -20,9 +22,15 @@ export default function App() {
   }
 
   useEffect(() => {
+    if(userInput.length > 4){
+      setUserInput('')
+    }
+
     if(userInput === passcode){
       console.log("correct password")
     }
+
+
   }, [userInput])
 
   const btnId = useId()
@@ -53,6 +61,9 @@ export default function App() {
       <div>
         {
           userInput === passcode && <p>Correct Passcode!</p>
+        }
+        {
+          userInput.length === 4 && userInput != passcode && <p>Wrong Passcode!</p>
         }
       </div>
     </>
