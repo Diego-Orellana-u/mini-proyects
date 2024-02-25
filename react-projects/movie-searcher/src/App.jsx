@@ -92,14 +92,14 @@ let ladder = {
     step: 0,
     up() {
         this.step++;
-        return ladder
+        return this
     },
     down() {
         this.step--;
-        return ladder
+        return this
     },
     showStep: function() { // shows the current step
       alert( this.step );
-      return ladder
+      return this
     }
 };
