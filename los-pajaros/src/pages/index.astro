@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Slider from '../components/Slider.astro';
+import Stores from '../components/Stores.astro';
+import Information from '../components/Information.astro';
+import Categories from '../components/Categories.astro';
+---
+
+<Layout title="Los Pajaros - Galería de antigüedades y más">
+	<main>
+		<Slider />
+		<Stores />
+		<Information />
+		<Categories />
+	</main>
+</Layout>
+
+<style>
+	main {
+		background-color: #fff;
+		color: black;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+</style>
