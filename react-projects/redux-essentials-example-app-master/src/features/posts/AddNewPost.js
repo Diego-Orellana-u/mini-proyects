@@ -1,4 +1,3 @@
-import { nanoid } from "@reduxjs/toolkit"
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addPost } from "./PostsSlice"
@@ -9,7 +8,7 @@ export default function AddNewPost(){
 
   const [ title, setTitle ] = useState('')
   const [ content, setContent ] = useState('')
-  const [ userId, setUserId ] = useState('')
+  const [ author, setAuthor ] = useState('')
 
   const dispatch = useDispatch()
   const users = useSelector(state => state.users)
@@ -18,14 +17,14 @@ export default function AddNewPost(){
 
   const onChangeContent = (e) => setContent(e.target.value)
 
-  const onClickUser = (e) => setUserId(e.target.value)
+  const onClickUser = (user) => setAuthor(user)
 
   const onCreateNewPost = () => {
     if(title && content){
       dispatch(addPost(
         title,
         content,
-        userId
+        author
       ))
     }
 
@@ -33,7 +32,7 @@ export default function AddNewPost(){
     setContent('')
   }
 
-  const canSave = Boolean(title) && Boolean(content) && Boolean(userId)
+  const canSave = Boolean(title) && Boolean(content) && Boolean(author)
 
   return(
     <section>
@@ -59,7 +58,7 @@ export default function AddNewPost(){
           <option>Select a user</option>
           {
             users.map(user => (
-              <option key={user.id} value={user.id} onClick={onClickUser}>{user.name}</option>
+              <option key={user.id} value={user.name} onClick={() => onClickUser(user)}>{user.name}</option>
             ))
           }
         </select>
