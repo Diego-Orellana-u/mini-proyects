@@ -1,7 +1,6 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server",
@@ -23,5 +22,7 @@
     "mongoose": "^8.2.0",
     "mongoose-sequence": "^6.0.1",
     "uuid": "^9.0.1"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
