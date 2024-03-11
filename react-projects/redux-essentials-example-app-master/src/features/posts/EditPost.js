@@ -1,14 +1,14 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { editPost } from "./PostsSlice"
+import { editPost, selectPostById } from "./PostsSlice"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 
 export default function ModifyPost({ match }){
 
   const { postId } = match.params
 
-  const post = useSelector(state => state.posts.find(post => post.id === postId))
-
+  const post = useSelector(state => selectPostById(state, postId))
+  
   const dispatch = useDispatch()
   const history = useHistory()
 

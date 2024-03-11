@@ -1,9 +1,10 @@
-import { createSlice, nanoid, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import { sub } from 'date-fns'
 import { client } from '../../api/client'
 
 const initialState = {
   posts: [],
-  status: 'idle',
+  status: 'idle',  // 'idle', 'loading', 'succeeded', 'failed'
   error: null
 }
 
@@ -12,7 +13,10 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return response.data
 })
 
-
+export const newPost = createAsyncThunk('posts/addNewPost', async (initialPost) => {
+  const response = await client.post('/fakeApi/posts', initialPost)
+  return response.data
+})
 
 const postsSlice = createSlice({
   name: "posts",
@@ -45,6 +49,7 @@ const postsSlice = createSlice({
     },
     editPost: (state, action) => {
           const { postId, newTitle, newContent } = action.payload
+          console.log(postId, newTitle, newContent)
           state = state.posts.map(post => {
             if(post.id === postId){
               post.title = newTitle
@@ -52,6 +57,26 @@ const postsSlice = createSlice({
             }  
         })
       }
+    },
+    extraReducers(builder){
+      builder
+        .addCase(fetchPosts.pending, (state, action) => {
+          state.status = 'loading'
+        })
+        .addCase(fetchPosts.fulfilled, (state, action) => {
+          state.status ='succeeded'
+
+          state.posts = state.posts.concat(action.payload)
+        }) 
+        .addCase(fetchPosts.rejected, (state, action) => {
+          state.status ='failed'
+          state.error = action.error.message
+        })
+        .addCase(newPost.fulfilled, (state, action) => {
+          action.payload.userId = Number(action.payload.userId)
+          action.payload.date = new Date().toISOString()
+          state.posts.push(action.payload)
+        })
     }
   }
 )
@@ -60,4 +85,8 @@ export default postsSlice.reducer
 export const { addPost, editPost, reactionAdded } = postsSlice.actions
 
 export const selectAllPosts = state => state.posts.posts
-export const selectPostById = (state, postId) => state.posts.posts.find(post => post.id === postId)
+export const selectPostById = (state, postId) => {
+  return state.posts.posts.find(post => post.id === postId)}
+
+export const getPostsStatus = (state) => state.posts.status
+export const getPostsError = (state) => state.posts.error

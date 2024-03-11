@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
-import { addPost } from "./PostsSlice"
+import { newPost } from "./PostsSlice"
 import { useSelector } from "react-redux"
 
 
@@ -9,6 +9,7 @@ export default function AddNewPost(){
   const [ title, setTitle ] = useState('')
   const [ content, setContent ] = useState('')
   const [ author, setAuthor ] = useState('')
+  const [ addRequestStatus, setAddRequestStatus ] = useState('idle')
 
   const dispatch = useDispatch()
   const users = useSelector(state => state.users)
@@ -17,22 +18,27 @@ export default function AddNewPost(){
 
   const onChangeContent = (e) => setContent(e.target.value)
 
-  const onClickUser = (user) => setAuthor(user)
+  const onClickUser = (e) => {
+    setAuthor(e.target.value)
+  }
+  const canSave = [title, content, author].every(Boolean) && addRequestStatus === 'idle'
 
   const onCreateNewPost = () => {
-    if(title && content){
-      dispatch(addPost(
-        title,
-        content,
-        author
-      ))
+    if(canSave){
+      try {
+        setAddRequestStatus('pending')
+        dispatch(newPost({ title, content, user: author })).unwrap() //unwrap returns a promise
+
+        setTitle('')
+        setContent('')
+        setAuthor('')
+      } catch (error) {
+          console.error('Failed to save the post', error)
+      } finally{
+          setAddRequestStatus('idle')
+      }
     }
-
-    setTitle('')
-    setContent('')
   }
-
-  const canSave = Boolean(title) && Boolean(content) && Boolean(author)
 
   return(
     <section>
@@ -54,11 +60,11 @@ export default function AddNewPost(){
           onChange={onChangeContent}
         />
 
-        <select>
+        <select onChange={(e) => onClickUser(e)}>
           <option>Select a user</option>
           {
             users.map(user => (
-              <option key={user.id} value={user.name} onClick={() => onClickUser(user)}>{user.name}</option>
+              <option key={user.id} value={user.id}>{user.name}</option>
             ))
           }
         </select>

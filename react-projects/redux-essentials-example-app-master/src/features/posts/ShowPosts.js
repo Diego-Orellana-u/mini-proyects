@@ -3,47 +3,45 @@ import { Link } from "react-router-dom/cjs/react-router-dom";
 import UserAuthor from "../users/UserAuthor";
 import TimeAgo from "./TimeAgo";
 import ReactionButtons from "./ReactionButtons";
-import { fetchPosts, selectAllPosts } from "./PostsSlice";
+import { fetchPosts, selectAllPosts, getPostsStatus, getPostsError } from "./PostsSlice";
 import { useEffect } from "react";
+import PostExcerpt from "./PostExcerpt";
+
 
 export default function ShowPosts(){
   const dispatch = useDispatch()
   const posts = useSelector(selectAllPosts)
 
-  const postStatus = useSelector(state => state.posts.status)
+  const postStatus = useSelector(getPostsStatus)
+  const error = useSelector(getPostsError)
 
   useEffect(() => {
-    if(postStatus === 'idle'){
-      dispatch(fetchPosts)
+    if (postStatus === 'idle') {
+      dispatch(fetchPosts())
     }
   }, [postStatus, dispatch])
+  
+  let content
+  if (postStatus === 'loading') {
+    // content = <Spinner text="Loading..." />
+  } else if (postStatus === 'succeeded') {
+    // Sort posts in reverse chronological order by datetime string
+    const orderedPosts = posts
+      .slice()
+      .sort((a, b) => b.date.localeCompare(a.date))
 
-  const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+    content = orderedPosts.map(post => (
+      <PostExcerpt key={post.id} post={post} />
+    ))
+  } else if (postStatus === 'failed') {
+    content = <div>{error}</div>
+  }
 
-  const renderedPosts = orderedPosts.map(post => (
-    <article key={post.id} className="post-excerpt">
-      <div>
-        <h3>{post.title}</h3> 
-        <UserAuthor author={post.author} />
-        <TimeAgo timeStamp={post.date} />
-      </div>
-      <p className="post-content">{post.content.substring(0,100)}</p>
-      <Link to={`/posts/${post.id}`} className="button muted-button">
-        View Post
-      </Link>
-      <Link to={`/editPost/${post.id}`} className="button edit-button">
-        Edit Post
-      </Link>
-      <div>
-        <ReactionButtons post={post} />
-      </div>
-    </article>
-  ))
 
   return(
     <section className="posts-list">
       <h2>Posts</h2>
-      {renderedPosts}
+      {content}
     </section>
   )
 
