@@ -79,8 +79,9 @@ const updateUser = asyncHandler(async (req, res) => {
   user.roles = roles
   user.active = active
 
+  
+  //  Hash password
   if(password){
-    //  Hash password
     const hashedPsw = await bcrypt.hash(password, 10)
     user.password = hashedPsw
   }
