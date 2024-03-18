@@ -5,24 +5,36 @@ import ChevronBtns from "./ChevronBtns";
 import dayjs from "dayjs";
 
 export default function MiniCalendar() {
-  const { monthIndex, setMonthIndex } = useContext(GlobalContext);
+  const { monthIndex, setMonthIndex, daySelected, setDaySelected } =
+    useContext(GlobalContext);
+
   const [currentMonthIdx, setCurrentMonthIdx] = useState(dayjs().month());
   const [monthArray, setMonthArray] = useState(getMonth());
-
-  useEffect(() => {
-    setMonthArray(getMonth(currentMonthIdx));
-  }, [currentMonthIdx]);
+  const [currDay, setCurrDay] = useState();
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);
   }, [monthIndex]);
 
   const handlePrevMonth = () => {
-    setCurrentMonthIdx(currentMonthIdx - 1);
+    setCurrentMonthIdx((prevMonthIdx) => {
+      const newMonthIdx = prevMonthIdx - 1;
+      setMonthArray(getMonth(newMonthIdx));
+      return newMonthIdx;
+    });
   };
 
   const handleNextMonth = () => {
-    setCurrentMonthIdx(currentMonthIdx + 1);
+    setCurrentMonthIdx((prevMonthIdx) => {
+      const newMonthIdx = prevMonthIdx + 1;
+      setMonthArray(getMonth(newMonthIdx));
+      return newMonthIdx;
+    });
+  };
+
+  const getDayClass = (day) => {
+    const format = "DD-MM-YY";
+    setCurrDay(day.format(format));
   };
 
   const handleMiniButton = () => {
@@ -53,8 +65,18 @@ export default function MiniCalendar() {
             {weekRow.map((day, i) => (
               <button
                 key={i}
-                className={`py-1 w-full`}
-                onClick={handleMiniButton}
+                className={`py-1 w-full ${
+                  day.format("YY-MM-DD") === dayjs().format("YY-MM-DD") &&
+                  "bg-blue-500 rounded-full text-white"
+                } ${
+                  day.format("DD-MM-YY") === daySelected &&
+                  "bg-blue-100 rounded-full text-blue-600 font-normal"
+                }`}
+                onClick={() => {
+                  handleMiniButton();
+                  setDaySelected(day);
+                  getDayClass(day);
+                }}
               >
                 <span className="text-sm">{day.format("D")}</span>
               </button>

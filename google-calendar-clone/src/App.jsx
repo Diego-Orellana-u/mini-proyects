@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <>
-      <EventModal />
+      {/* <EventModal /> */}
       <div className="h-screen flex flex-col flex-1">
         <CalendarHeader />
         <div className="flex flex-1">
