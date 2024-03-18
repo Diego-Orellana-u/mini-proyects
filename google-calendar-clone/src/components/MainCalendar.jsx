@@ -1,5 +1,6 @@
 import React from "react";
 import DaySquare from "./DaySquare";
+import EventModal from "./EventModal";
 
 export default function MainCalendar({ month }) {
   return (

@@ -7,6 +7,7 @@ export default function DaySquare({ rowIndex, day }) {
         )}
         <p className={`text-sm p-1 my-1 text-center`}>{day.format("DD")}</p>
       </header>
+      <div></div>
     </div>
   );
 }
