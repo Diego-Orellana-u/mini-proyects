@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 export default function ContextWrapper({ children }) {
   const [monthIndex, setMonthIndex] = useState(dayjs().month());
-  const [daySelected, setDaySelected] = useState();
+  const [daySelected, setDaySelected] = useState(dayjs());
 
   return (
     <GlobalContext.Provider

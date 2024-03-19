@@ -7,10 +7,8 @@ import dayjs from "dayjs";
 export default function MiniCalendar() {
   const { monthIndex, setMonthIndex, daySelected, setDaySelected } =
     useContext(GlobalContext);
-
   const [currentMonthIdx, setCurrentMonthIdx] = useState(dayjs().month());
   const [monthArray, setMonthArray] = useState(getMonth());
-  const [currDay, setCurrDay] = useState();
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);
@@ -34,7 +32,15 @@ export default function MiniCalendar() {
 
   const getDayClass = (day) => {
     const format = "DD-MM-YY";
-    setCurrDay(day.format(format));
+    const currDay = day.format(format);
+
+    const slcDay = daySelected && daySelected.format(format);
+
+    if (currDay === slcDay) {
+      return "bg-blue-100 rounded-full text-blue-600 font-normal";
+    } else {
+      return "";
+    }
   };
 
   const handleMiniButton = () => {
@@ -68,14 +74,10 @@ export default function MiniCalendar() {
                 className={`py-1 w-full ${
                   day.format("YY-MM-DD") === dayjs().format("YY-MM-DD") &&
                   "bg-blue-500 rounded-full text-white"
-                } ${
-                  day.format("DD-MM-YY") === daySelected &&
-                  "bg-blue-100 rounded-full text-blue-600 font-normal"
-                }`}
+                } ${getDayClass(day)}`}
                 onClick={() => {
                   handleMiniButton();
                   setDaySelected(day);
-                  getDayClass(day);
                 }}
               >
                 <span className="text-sm">{day.format("D")}</span>
