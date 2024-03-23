@@ -12,8 +12,10 @@ export default function MiniCalendar() {
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);
+    setMonthArray(getMonth(monthIndex));
   }, [monthIndex]);
 
+  console.log(currentMonthIdx);
   const handlePrevMonth = () => {
     setCurrentMonthIdx((prevMonthIdx) => {
       const newMonthIdx = prevMonthIdx - 1;
