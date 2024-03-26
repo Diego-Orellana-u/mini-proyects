@@ -2,10 +2,12 @@
   "name": "prueba-tecnica-javascript-node",
   "module": "index.ts",
   "type": "module",
+  "main": "./solutions/server.js",
   "scripts": {
-    "test": "node --test"
+    "dev": "nodemon server"
   },
   "devDependencies": {
+    "nodemon": "^3.1.0",
     "supertest": "^6.3.3"
   },
   "dependencies": {
