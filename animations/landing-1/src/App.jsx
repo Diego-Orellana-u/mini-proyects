@@ -93,7 +93,7 @@ export default function App() {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ overflow: activeMenu ? 'hidden' : '' }}>
       <nav>
         <div>
           <a href="#">FACTORIAL</a>
