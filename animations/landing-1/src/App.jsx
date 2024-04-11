@@ -176,7 +176,6 @@ export default function App() {
           1 <br />
         </p>
       </div>
-      <div className="rem"></div>
       <Menu setMenu={setActiveMenu} menu={activeMenu} />
     </div>
   );

@@ -3,17 +3,20 @@ import { useLayoutEffect } from 'react';
 
 export default function Menu({ setMenu, menu }) {
   const handleToggle = () => {
-    setMenu(false);
-    gsap.to('.block-menu', {
-      y: '100vh',
-      duration: 0.4,
-      stagger: -0.1,
-      ease: 'power3.inOut',
-    });
+    setTimeout(() => {
+      setMenu(false);
+    }, 300);
 
     gsap.to('.menu-container', {
       opacity: 0,
       duration: 0.8,
+      ease: 'power3.inOut',
+    });
+
+    gsap.to('.block-menu', {
+      y: '100vh',
+      duration: 0.4,
+      stagger: -0.1,
       ease: 'power3.inOut',
     });
   };
@@ -41,7 +44,7 @@ export default function Menu({ setMenu, menu }) {
           duration: 0.8,
           ease: 'power3.inOut',
         },
-        '-=0.3'
+        '-=0.5'
       );
     }
   }, [menu]);

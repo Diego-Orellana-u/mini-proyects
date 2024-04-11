@@ -84,6 +84,7 @@ p {
   width: 100%;
   height: 100vh;
   display: flex;
+  z-index: 10;
 }
 
 .block-menu {
@@ -191,6 +192,10 @@ h1 {
   margin-right: 2rem;
   margin-top: 2rem;
   cursor: pointer;
+}
+
+.toggle-menu a {
+  color: #333;
 }
 
 .rolling-text {
