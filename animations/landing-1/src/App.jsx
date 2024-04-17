@@ -1,9 +1,11 @@
 import { gsap } from 'gsap';
 import { useLayoutEffect, useState } from 'react';
+
+import { useGSAP } from '@gsap/react';
 import Menu from './Menu';
 
 export default function App() {
-  useLayoutEffect(() => {
+  useGSAP(() => {
     const tl = gsap.timeline({ delay: 1 });
     const movements = [-100, 250, 100, -180, -90, 100, 0, -120, -260];
 
