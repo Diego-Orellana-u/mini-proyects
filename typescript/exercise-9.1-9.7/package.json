@@ -1,0 +1,12 @@
+{
+  "name": "exercise-9.1-9.7",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
