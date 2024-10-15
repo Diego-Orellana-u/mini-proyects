@@ -32,4 +32,10 @@ printCar(new Car()) //✔️ Fine
 printCar(new Truck()) //✔️ Fine
 printCar(vehicle) //✔️ Fine
 
+// The function printCar doesn’t care about which constructor its argument came from, it only cares about whether it has:
+
+// A make property that’s of type string
+// A model property that’s of type string
+// A year property that’s of type number
+
 export default {}
