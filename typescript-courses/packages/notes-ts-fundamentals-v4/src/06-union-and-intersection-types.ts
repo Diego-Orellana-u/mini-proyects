@@ -23,32 +23,33 @@ function flipCoin() {
   return 'tails'
 }
 
-// const outcome = flipCoin()
-// //     ^? "heads" | "tails"
+const outcome = flipCoin()
+//     ^? "heads" | "tails"
 // //? A more complicated example
 
-// const success = ["success", { name: "Mike North", email: "mike@example.com" }] as const
-// const fail = ["error", new Error("Something went wrong!")] as const
+const success = [
+  'success',
+  { name: 'Mike North', email: 'mike@example.com' },
+] as const
+const fail = ['error', new Error('Something went wrong!')] as const
 
-/*
-// function maybeGetUserInfo() {
-//     if (flipCoin() === "heads") {
-//         return success
-//     } else {
-//         return fail
-//     }
-// }
+function maybeGetUserInfo() {
+  if (flipCoin() === 'heads') {
+    return success
+  } else {
+    return fail
+  }
+}
 
-// const outcome2 = maybeGetUserInfo()
+const outcome2 = maybeGetUserInfo()
 
 //* Working with union types
-/*
 //? Think critically: "AND" vs "OR", as it pertains to the contents of the set,
 //? vs the assumptions we can make about the value
-// function printEven(even: Evens): void { }
-// function printLowNumber(lowNum: OneThroughFive): void { }
-// function printEvenNumberUnder5(num: 2 | 4): void { }
-// function printNumber(num: number): void { }
+function printEven(even: Evens): void {}
+function printLowNumber(lowNum: OneThroughFive): void {}
+function printEvenNumberUnder5(num: 2 | 4): void {}
+function printNumber(num: number): void {}
 
 // let x = 5 as Evens | OneThroughFive;
 
