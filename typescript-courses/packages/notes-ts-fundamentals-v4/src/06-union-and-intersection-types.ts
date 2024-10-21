@@ -53,39 +53,36 @@ function printNumber(num: number): void {}
 
 // let x = 5 as Evens | OneThroughFive;
 
-/*
 //? What does Evens | OneThroughFive accept as values?
-// let evenOrLowNumber: Evens | OneThroughFive;
-// evenOrLowNumber = 6 //✔️ An even
-// evenOrLowNumber = 3 //✔️ A low number
-// evenOrLowNumber = 4 //✔️ A even low number
+let evenOrLowNumber: Evens | OneThroughFive
+evenOrLowNumber = 6 //✔️ An even
+evenOrLowNumber = 3 //✔️ A low number
+evenOrLowNumber = 4 //✔️ A even low number
 
 //? What requirements can `Evens | OneThroughFive` meet?
-// printEven(x) //! Not guaranteed to be even
-// printLowNumber(x) //! Not guaranteed to be in {1, 2, 3, 4, 5}
-// printEvenNumberUnder5(x) //! Not guaranteed to be in {2, 4}
-// printNumber(x) //✔️ Guaranteed to be a number
+printEven(x) //! Not guaranteed to be even
+printLowNumber(x) //! Not guaranteed to be in {1, 2, 3, 4, 5}
+printEvenNumberUnder5(x) //! Not guaranteed to be in {2, 4}
+printNumber(x) //✔️ Guaranteed to be a number
 
 //* Narrowing with type guards
-/*
-// const [first, second] = outcome2
-// if (second instanceof Error) {
-//     // In this branch of your code, second is an Error
-//     second
-// } else {
-//     // In this branch of your code, second is the user info
-//     second
-// }
+const [first, second] = outcome2
+if (second instanceof Error) {
+  // In this branch of your code, second is an Error
+  second
+} else {
+  // In this branch of your code, second is the user info
+  second
+}
 
 //* Discriminated unions
-/*
-// if (first === "error") {
-//     // In this branch of your code, second is an Error
-//     second
-// } else {
-//     // In this branch of your code, second is the user info
-//     second
-// }
+if (first === 'error') {
+  // In this branch of your code, second is an Error
+  second
+} else {
+  // In this branch of your code, second is the user info
+  second
+}
 
 //* Intersection Types
 /*
