@@ -7,12 +7,12 @@ const humidity = 79 //? Recall literal types
 //? A set of numbers from 1 to 5
 type OneThroughFive = 1 | 2 | 3 | 4 | 5
 let lowNumber: OneThroughFive = 3 //✔️ Valid
-// lowNumber = 8 //! 8 is not in the set
+lowNumber = 8 //! 8 is not in the set
 
 //? A set of even numbers from 1 to 9
 type Evens = 2 | 4 | 6 | 8
 let evenNumber: Evens = 2 //✔️ Valid
-// evenNumber = 5; //! 5 is not in the set
+evenNumber = 5 //! 5 is not in the set
 
 // //? A set of numbers from 1 to 5 OR a set of even numbers from 1 to 9
 let evenOrLowNumber = 5 as Evens | OneThroughFive
@@ -51,7 +51,7 @@ function printLowNumber(lowNum: OneThroughFive): void {}
 function printEvenNumberUnder5(num: 2 | 4): void {}
 function printNumber(num: number): void {}
 
-// let x = 5 as Evens | OneThroughFive;
+let x = 5 as Evens | OneThroughFive
 
 //? What does Evens | OneThroughFive accept as values?
 let evenOrLowNumber: Evens | OneThroughFive
