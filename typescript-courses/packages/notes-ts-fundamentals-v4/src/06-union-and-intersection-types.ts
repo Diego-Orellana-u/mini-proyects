@@ -84,6 +84,10 @@ if (first === 'error') {
   second
 }
 
+// We can see that the <span style="background:rgba(240, 200, 0, 0.2)">autocomplete information for the first value suggests that it’s a string.</span> This is because, regardles of whether this happens to be the specific `"success"` or `"error"` string, <span style="background:rgba(240, 200, 0, 0.2)">it’s definitely going to be a string.</span>
+
+// The **second value is a bit more complicated** — <span style="background:rgba(240, 200, 0, 0.2)">only the `name` property is available to us.</span> This is because, both our “user info object, and instances of the `Error` class have a `name` property whose value is a string. Typescript always try to use the safest approach.
+
 //* Intersection Types
 //? What does Evens & OneThroughFive accept as values?
 let evenAndLowNumber: Evens & OneThroughFive
