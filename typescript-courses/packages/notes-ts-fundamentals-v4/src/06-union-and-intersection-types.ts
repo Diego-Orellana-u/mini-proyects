@@ -23,6 +23,10 @@ function flipCoin() {
   return 'tails'
 }
 
+// We can see union types as the **OR** operator. It unite both sets.
+
+// Typescript uses the pipe ( **|** ) symbol to represent the union type operator.
+
 const outcome = flipCoin()
 //     ^? "heads" | "tails"
 // //? A more complicated example
