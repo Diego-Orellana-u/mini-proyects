@@ -88,9 +88,9 @@ if (first === 'error') {
   second
 }
 
-// We can see that the <span style="background:rgba(240, 200, 0, 0.2)">autocomplete information for the first value suggests that it’s a string.</span> This is because, regardles of whether this happens to be the specific `"success"` or `"error"` string, <span style="background:rgba(240, 200, 0, 0.2)">it’s definitely going to be a string.</span>
+// We can see that the autocomplete information for the first value suggests that it’s a string.</span> This is because, regardles of whether this happens to be the specific `"success"` or `"error"` string, it’s definitely going to be a string.</span>
 
-// The **second value is a bit more complicated** — <span style="background:rgba(240, 200, 0, 0.2)">only the `name` property is available to us.</span> This is because, both our “user info object, and instances of the `Error` class have a `name` property whose value is a string. Typescript always try to use the safest approach.
+// The **second value is a bit more complicated** — only the `name` property is available to us.</span> This is because, both our “user info object, and instances of the `Error` class have a `name` property whose value is a string. Typescript always try to use the safest approach.
 
 //* Intersection Types
 //? What does Evens & OneThroughFive accept as values?
@@ -98,6 +98,10 @@ let evenAndLowNumber: Evens & OneThroughFive
 evenAndLowNumber = 6 //! Not in OneThroughFive
 evenAndLowNumber = 3 //! Not in Evens
 evenAndLowNumber = 4 //✔️ In both sets
+
+// We can see union types as the **AND** operator. It takes the elements that live in both sets:
+
+// Typescript uses the pipe ( **&** ) symbol to represent the union type operator.
 
 //? What requirements can `Evens & OneThroughFive` meet?
 let y = 4 as Evens & OneThroughFive
