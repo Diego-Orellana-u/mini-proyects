@@ -103,6 +103,8 @@ evenAndLowNumber = 4 //✔️ In both sets
 
 // Typescript uses the pipe ( **&** ) symbol to represent the union type operator.
 
+// Typescript knows here that first and second are linked, so when we get a first === "error", Typescript knows that second will be an Error instance.
+
 //? What requirements can `Evens & OneThroughFive` meet?
 let y = 4 as Evens & OneThroughFive
 
