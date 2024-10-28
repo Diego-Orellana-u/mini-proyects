@@ -3,22 +3,20 @@ type Amount = {
   currency: string
   value: number
 }
-/*
-// function printAmount(amt: Amount) {
-//     console.log(amt)
+function printAmount(amt: Amount) {
+  console.log(amt)
 
-//     const { currency, value } = amt
-//     console.log(`${currency} ${value}`)
-// }
+  const { currency, value } = amt
+  console.log(`${currency} ${value}`)
+}
 
-// const donation = {
-//     currency: "USD",
-//     value: 30.0,
-//     description: "Donation to food bank",
-// }
+const donation = {
+  currency: 'USD',
+  value: 30.0,
+  description: 'Donation to food bank',
+}
 
-// printAmount(donation) //✔️ Valid
-
+printAmount(donation) //✔️ Valid
 
 //? Let's look at a familiar example from the last chapter
 /*
