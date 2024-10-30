@@ -41,30 +41,24 @@ export function maybeGetUserInfo():
 }
 
 //? Let's model the return type as an interface
-/*
-// type UserInfoOutcomeError = readonly ["error", Error]
-// type UserInfoOutcomeSuccess = readonly [
-//     "success",
-//     { readonly name: string; readonly email: string },
-// ]
-// type UserInfoOutcome =
-//     | UserInfoOutcomeError
-//     | UserInfoOutcomeSuccess
-
+type UserInfoOutcomeError = readonly ['error', Error]
+type UserInfoOutcomeSuccess = readonly [
+  'success',
+  { readonly name: string; readonly email: string },
+]
+type UserInfoOutcome = UserInfoOutcomeError | UserInfoOutcomeSuccess
 
 //* Inheritance in type aliases
-/*
-// type SpecialDate = Date & { getDescription(): string }
+type SpecialDate = Date & { getDescription(): string }
 
-// const newYearsEve: SpecialDate
-//     //                    ^?
-//     = Object.assign(
-//         new Date(),
-//         { getDescription: () => "Last day of the year" }
-//     )
+const newYearsEve: SpecialDate =
+  //                    ^?
+  Object.assign(new Date(), {
+    getDescription: () => 'Last day of the year',
+  })
 
-// newYearsEve.getDescription
-// //             ^?
+newYearsEve.getDescription
+//             ^?
 
 //* Interfaces
 /*
