@@ -105,56 +105,54 @@ function careForHamster(h: Hamster) {
 }
 
 //? `implements` keyword
-/*
-// interface AnimalLike {
-//     eat(food): void
-// }
+interface AnimalLike {
+  eat(food): void
+}
 
-// class Dog implements AnimalLike {
-//     bark() {
-//         return "woof"
-//     }
-// }
-/*
-// class LivingOrganism { //? A base class
-//     isAlive() {
-//         return true
-//     }
-// }
-// interface CanBark { //? Another interface
-//     bark(): string
-// }
-// class Dog2
-//     extends LivingOrganism
-//     implements AnimalLike, CanBark {
-//     bark() {
-//         return "woof"
-//     }
-//     eat(food) {
-//         consumeFood(food)
-//     }
-// }
+class Dog implements AnimalLike {
+  bark() {
+    return 'woof'
+  }
+}
+
+class LivingOrganism {
+  //? A base class
+  isAlive() {
+    return true
+  }
+}
+interface CanBark {
+  //? Another interface
+  bark(): string
+}
+class Dog2 extends LivingOrganism implements AnimalLike, CanBark {
+  bark() {
+    return 'woof'
+  }
+  eat(food) {
+    consumeFood(food)
+  }
+}
 
 //? Implements sometimes works with type aliases
-/*
-// type CanJump = {
-//     jumpToHeight(): number
-//         // | [number, number]
-// }
-// class Dog3 implements CanJump {
-//     jumpToHeight() {
-//         return 1.7
-//     }
-//     eat(food) {
-//         consumeFood(food)
-//     }
-// }
+type CanJump = {
+  jumpToHeight(): number
+  // | [number, number]
+}
+class Dog3 implements CanJump {
+  jumpToHeight() {
+    return 1.7
+  }
+  eat(food) {
+    consumeFood(food)
+  }
+}
 
-// type CanBark =
-//   | number
-//   | {
-//       bark(): string
-//     }
+type CanBark =
+  | number
+  | {
+      bark(): string
+    }
 
 //* Open interfaces
 
