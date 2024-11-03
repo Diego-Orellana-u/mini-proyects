@@ -18,6 +18,13 @@ const donation = {
 
 printAmount(donation) //✔️ Valid
 
+// We can see a couple of things here:
+
+// - the tooltip on `amt` is now a lot cleaner and **more semantic** (meaningful, in connection with the concept behind it)
+// - import/export of this `type` works just as it would for a function or a class in JavaScript
+
+// Note: It’s important to realize that the **name** `Amount` is just for our convenience. This is still a structural type system
+
 //? Let's look at a familiar example from the last chapter
 function flipCoin() {
   if (Math.random() > 0.5) return 'heads'
