@@ -26,6 +26,10 @@ printAmount(donation) //✔️ Valid
 // Note: It’s important to realize that the **name** `Amount` is just for our convenience. This is still a structural type system
 
 //? Let's look at a familiar example from the last chapter
+
+interface test {
+  currency: string | number
+}
 function flipCoin() {
   if (Math.random() > 0.5) return 'heads'
   return 'tails'
