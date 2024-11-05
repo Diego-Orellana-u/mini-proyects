@@ -201,3 +201,7 @@ if (typeof val !== 'number') {
 
 /**/
 export default {}
+
+// Similar to javascript classes, we can use the keyword *extends* to add inheritance to interfaces, extending other interfaces.
+
+// Note: You can not extend classes to interfaces. Extend is for similar things
