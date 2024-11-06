@@ -205,3 +205,9 @@ export default {}
 // Similar to javascript classes, we can use the keyword *extends* to add inheritance to interfaces, extending other interfaces.
 
 // Note: You can not extend classes to interfaces. Extend is for similar things
+
+// A few things to point out here:
+
+// 1. This is a rare occasion where we see type information on the right hand side of the assignment operator (`=`). When compiling, this gets erased.
+// 2. We’re using `TitleCase` to format the alias’ name. This is a common convention
+// 3. As we can see below, we can only declare an alias of a given name _once_ within a given scope. This is kind of like how a `let` or `const` variable declaration works
