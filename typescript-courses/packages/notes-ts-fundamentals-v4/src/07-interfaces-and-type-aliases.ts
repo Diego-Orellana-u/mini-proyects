@@ -77,6 +77,8 @@ interface Amount2 {
   value: number
 }
 
+// Interfaces are a way of naming the types in Typescript instead of putting them directly where it needs to be. It is used as a way to create a contract within your code.
+
 function printAmount2(amt: Amount2) {
   amt
 }
