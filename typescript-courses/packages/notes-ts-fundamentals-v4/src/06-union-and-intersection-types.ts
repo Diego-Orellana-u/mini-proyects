@@ -116,3 +116,7 @@ printNumber(y) //✔️ Guaranteed to be a number
 /**/
 
 export default {}
+
+// There’s some interesting asymmetry at play here. A `Evens | OneThroughFive` can accept a wide range of values, but because allows for this flexibility, it doesn’t meet the type-checking requirements for most of the `print*` functions.
+
+// In essence, while `Evens | OneThroughFive` allows a broader range of values, it loses the precision needed to satisfy the more specific functions that expect only `Evens` or only `OneThroughFive`.
