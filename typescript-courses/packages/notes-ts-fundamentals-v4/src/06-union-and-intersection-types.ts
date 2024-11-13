@@ -117,6 +117,12 @@ printNumber(y) //✔️ Guaranteed to be a number
 
 export default {}
 
+// We can see that the autocomplete information for the first value suggests that it’s a string.This is because, regardles of whether this happens to be the specific `"success"` or `"error"` string, it’s definitely going to be a string.
+
+// The **second value is a bit more complicated** — only the `name` property is available to us. This is because, both our “user info object, and instances of the `Error` class have a `name` property whose value is a string. Typescript always try to use the safest approach.
+
+// This doesn't work well for us. We want to be able to know what result we got.
+
 // There’s some interesting asymmetry at play here. A `Evens | OneThroughFive` can accept a wide range of values, but because allows for this flexibility, it doesn’t meet the type-checking requirements for most of the `print*` functions.
 
 // In essence, while `Evens | OneThroughFive` allows a broader range of values, it loses the precision needed to satisfy the more specific functions that expect only `Evens` or only `OneThroughFive`.
