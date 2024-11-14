@@ -116,6 +116,11 @@ printNumber(y) //✔️ Guaranteed to be a number
 /**/
 
 export default {}
+// We can see union types as the **OR** operator. It unite both sets.
+
+// Typescript uses the pipe ( **|** ) symbol to represent the union type operator.
+
+// For example, if we have:
 
 // We can see that the autocomplete information for the first value suggests that it’s a string.This is because, regardles of whether this happens to be the specific `"success"` or `"error"` string, it’s definitely going to be a string.
 
