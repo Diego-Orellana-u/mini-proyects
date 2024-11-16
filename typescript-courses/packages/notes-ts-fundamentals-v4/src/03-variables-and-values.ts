@@ -58,3 +58,7 @@ const p = new Promise(result)
 /**/
 
 export default {}
+
+// We can start thinking about types as a set of allowed values. (sets are groups)
+
+// For example here, the set of values allowed for the variable is { all numbers }. (if typescript used literal types with let variables the same way it does with const variables, we wouldn't be able to use let variables as they are intended to be used in javascript )
