@@ -155,3 +155,5 @@ roNumPair.pop() // [4, 5] //! Not allowed
 /**/
 
 export default {}
+
+// Here we have an array containing three elements, and we are representing an implicit convention where the first element will be the year, the second element will be the maker, and the third element will be the model.
