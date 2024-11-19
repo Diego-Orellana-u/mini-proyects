@@ -167,6 +167,8 @@ type CanBark =
       bark(): string
     }
 
+// Notice that we cannot create types with the same name of other interfaces
+
 //* Open interfaces
 
 function feed(animal: AnimalLike) {
