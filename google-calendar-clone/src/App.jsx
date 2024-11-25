@@ -7,7 +7,7 @@ import GlobalContext from "./context/GlobalContext";
 import EventModal from "./components/EventModal";
 
 export default function App() {
-  const { monthIndex } = useContext(GlobalContext);
+  const { monthIndex, showEventModal } = useContext(GlobalContext);
   const [month, setMonth] = useState(getMonth(monthIndex));
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function App() {
 
   return (
     <>
-      {/* <EventModal /> */}
+      {showEventModal && <EventModal />}
       <div className="h-screen flex flex-col flex-1">
         <CalendarHeader />
         <div className="flex flex-1">
