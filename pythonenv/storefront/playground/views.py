@@ -1,22 +1,12 @@
 from django.shortcuts import render
 from store.models import Product
-from store.models import Customer
-from store.models import Collection
-from store.models import Order
-from store.models import OrderItem
-from django.db.models import Q, F
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.aggregates import Count, Max, Min, Avg, Sum
+from tags.models import TaggedItem 
 
-from django.db.models.functions import Concat
-
-from django.db.models import Value, Func, ExpressionWrapper, DecimalField
+from django.contrib.contenttypes.models import ContentType
 
 def say_hello(request):
 
-    discounted_price = ExpressionWrapper(F('unit_price') * 0.8, output_field=DecimalField())
 
-    annotate = Product.objects.annotate(discounted_price=discounted_price)
+    taggedProduct = TaggedItem.objects.get_tags_for(Product, 15)
 
-
-    return render(request, 'hello.html', {'name': 'Mosh', 'result': list(annotate), })
+    return render(request, 'hello.html', {'name': 'Mosh', 'tags': list(taggedProduct) })
