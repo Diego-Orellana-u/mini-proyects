@@ -7,6 +7,8 @@ from django.contrib.contenttypes.models import ContentType
 def say_hello(request):
 
 
-    taggedProduct = TaggedItem.objects.get_tags_for(Product, 15)
+    taggedProduct = Product.objects.all()
+    list(taggedProduct)
+    taggedProduct[0]
 
-    return render(request, 'hello.html', {'name': 'Mosh', 'tags': list(taggedProduct) })
+    return render(request, 'hello.html', {'name': 'Mosh', })
