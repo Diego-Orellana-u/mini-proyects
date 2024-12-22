@@ -27,7 +27,7 @@ class CustomerAdmin(admin.ModelAdmin):
   list_editable = ['membership']
   ordering = ['first_name', 'last_name']
   list_per_page = 10
-
+  search_fields = ['first_name', 'last_name']
   @admin.display(ordering='customer_orders')
   def customer_orders(self, customer):
     url = (reverse('admin:store_order_changelist') 
