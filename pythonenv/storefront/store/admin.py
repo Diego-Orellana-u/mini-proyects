@@ -5,12 +5,27 @@ from django.utils.html import format_html, urlencode
 from django.urls import reverse
 # Register your models here.
 
+class InventoryFilter(admin.SimpleListFilter):
+  title = 'inventory'
+  parameter_name = 'roberto'
+
+  def lookups(self, request, model_admin):
+    return [
+      ('<10', 'Low')
+    ]
+
+  def queryset(self, request, queryset):
+    if self.value() == '<10':
+      return queryset.filter(inventory__lt=10)
+
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
   list_display = ['title', 'unit_price', 'inventory_status', 'collection_title']
   list_editable = ['unit_price']
   list_per_page = 10
   list_select_related = ['collection']
+  list_filter = ['collection', 'last_update', InventoryFilter]
 
   def collection_title(self, product):
     return product.collection.title
@@ -27,7 +42,9 @@ class CustomerAdmin(admin.ModelAdmin):
   list_editable = ['membership']
   ordering = ['first_name', 'last_name']
   list_per_page = 10
-  search_fields = ['first_name', 'last_name']
+  search_fields = ['first_name__istartswith', 'last_name__istartswith']
+
+  
   @admin.display(ordering='customer_orders')
   def customer_orders(self, customer):
     url = (reverse('admin:store_order_changelist') 
