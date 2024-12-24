@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from . import models
 from django.db.models import Count
 from django.utils.html import format_html, urlencode
@@ -21,6 +21,14 @@ class InventoryFilter(admin.SimpleListFilter):
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+  autocomplete_fields = ['collection']
+
+  prepopulated_fields = {
+    'slug': ['title']
+  }
+
+
+  actions = ['clear_inventory']
   list_display = ['title', 'unit_price', 'inventory_status', 'collection_title']
   list_editable = ['unit_price']
   list_per_page = 10
@@ -35,6 +43,16 @@ class ProductAdmin(admin.ModelAdmin):
     if product.inventory < 10:
       return 'Low'
     return 'Ok'
+
+  @admin.action(description='Clear Inventory')
+  def clear_inventory(self, request, queryset):
+    updated_count = queryset.update(inventory=0)
+
+    self.message_user(
+      request,
+      f'{updated_count} products were successfully updated',
+      messages.ERROR
+    )
 
 @admin.register(models.Customer)
 class CustomerAdmin(admin.ModelAdmin):
@@ -74,6 +92,8 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(models.Collection)
 class CollectionAdmin(admin.ModelAdmin):
+  search_fields = ['title']
+  
   list_display = ['title', 'products_count']
 
   @admin.display(ordering='products_count')
