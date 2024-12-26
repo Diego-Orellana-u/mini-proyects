@@ -21,6 +21,8 @@ class InventoryFilter(admin.SimpleListFilter):
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
+  search_fields = ['title']
+
   autocomplete_fields = ['collection']
 
   prepopulated_fields = {
@@ -78,11 +80,18 @@ class CustomerAdmin(admin.ModelAdmin):
     )
 
 
+class OrderItemInline(admin.TabularInline):
+    model = models.OrderItem
+    autocomplete_fields = ['product']
+    extra = 0
+
+
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
   list_display = ['id', 'placed_at', 'payment_status', 'customer_name']
   ordering = ['placed_at']
   list_per_page = 10
+  inlines = [OrderItemInline]
 
   @admin.display(ordering='customer__first_name')
   def customer_name(self, order):
