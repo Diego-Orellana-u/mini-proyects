@@ -58,7 +58,6 @@ class Customer(models.Model):
 
 
 
-
 class Order(models.Model):
     PAYMENT_STATUS_PENDING = 'P'
     PAYMENT_STATUS_COMPLETE = 'C'
