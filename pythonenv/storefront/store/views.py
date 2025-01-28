@@ -7,6 +7,8 @@ from rest_framework import status
 from .models import Product, Collection
 from .serializers import ProductSerializer, CollectionSerializer
 
+# Created all serializers
+
 @api_view(['GET', 'POST'])
 def collection_list(request):
   if request.method == 'GET':
