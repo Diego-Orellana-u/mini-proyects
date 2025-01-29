@@ -11,7 +11,10 @@ from .serializers import ProductSerializer, CollectionSerializer
 
 @api_view(['GET', 'POST'])
 def collection_list(request):
+  # We separate each method with a conditional
+
   if request.method == 'GET':
+    # Annotate to create a new field with the product count
     queryset = Collection.objects.annotate(products_count=Count('products')).all()
     serializer = CollectionSerializer(queryset, many=True)
     return Response(serializer.data)
