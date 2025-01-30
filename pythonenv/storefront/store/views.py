@@ -16,6 +16,8 @@ def collection_list(request):
   if request.method == 'GET':
     # Annotate to create a new field with the product count
     queryset = Collection.objects.annotate(products_count=Count('products')).all()
+
+    # Used queryset and many=true to iterate over all objects
     serializer = CollectionSerializer(queryset, many=True)
     return Response(serializer.data)
   
@@ -39,6 +41,7 @@ def collection_detail(request, pk):
     return Response(serializer.data, status=status.HTTP_201_CREATED)
   
   elif request.method == 'DELETE':
+    # Adding a conditional to prevent deleting an associated object
     if collection.products.count() > 0:
         return Response({'error': 'Product can not be deleted because it is associated with an order item.'} ,status=status.HTTP_405_METHOD_NOT_ALLOWED)
     collection.delete()
