@@ -9,6 +9,8 @@ from .serializers import ProductSerializer, CollectionSerializer
 
 # Created all serializers
 
+# Collection serializers
+
 @api_view(['GET', 'POST'])
 def collection_list(request):
   # We separate each method with a conditional
@@ -46,6 +48,9 @@ def collection_detail(request, pk):
         return Response({'error': 'Product can not be deleted because it is associated with an order item.'} ,status=status.HTTP_405_METHOD_NOT_ALLOWED)
     collection.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+# Product Serializers
 
 @api_view(['GET', 'POST'])
 def product_list(request):
