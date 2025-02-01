@@ -16,6 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
     model = Product
     fields = ['id', 'title', 'unit_price', 'inventory', 'description', 'slug', 'collection', 'price_with_tax']
 
+  # We use the serializermethodfield method to calculate a new field
   price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
 
   def calculate_tax(self, product):
