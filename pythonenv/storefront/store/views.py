@@ -7,9 +7,7 @@ from rest_framework import status
 from .models import Product, Collection
 from .serializers import ProductSerializer, CollectionSerializer
 
-# Created all serializers
 
-# Collection serializers
 
 @api_view(['GET', 'POST'])
 def collection_list(request):
@@ -50,7 +48,6 @@ def collection_detail(request, pk):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-# Product Serializers
 
 @api_view(['GET', 'POST'])
 def product_list(request):
