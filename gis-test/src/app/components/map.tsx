@@ -10,10 +10,10 @@ const OpenLayersMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!mapRef.current) return;
+    if (!mapRef.current) return; // Make sure div exists before initializing map
 
     const map = new Map({
-      target: mapRef.current,
+      target: mapRef.current, // Attach map to div
       layers: [
         new TileLayer({
           source: new OSM(), // OpenStreetMap tiles
