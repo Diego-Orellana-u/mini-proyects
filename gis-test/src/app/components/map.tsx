@@ -20,8 +20,8 @@ const OpenLayersMap = () => {
         }),
       ],
       view: new View({
-        center: [0, 0], // Coordinates in EPSG:3857 (Web Mercator)
-        zoom: 2,
+        center: [0, 0], // Coordinates in EPSG:3857 (Web Mercator) Default center (longitude, latitude)
+        zoom: 2, // Default zoom level
       }),
     });
 
