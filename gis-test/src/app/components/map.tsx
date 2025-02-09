@@ -3,8 +3,9 @@
 import { useEffect, useRef } from "react";
 import Map from "ol/Map";
 import View from "ol/View";
-import TileLayer from "ol/layer/Tile";
-import OSM from "ol/source/OSM";
+import VectorLayer from "ol/layer/Vector";
+import GeoJSON from "ol/format/GeoJSON";
+import VectorSource from "ol/source/Vector";
 
 const OpenLayersMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -15,8 +16,11 @@ const OpenLayersMap = () => {
     const map = new Map({
       target: mapRef.current, // Attach map to div
       layers: [
-        new TileLayer({
-          source: new OSM(), // OpenStreetMap tiles
+        new VectorLayer({
+          source: new VectorSource({
+            format: new GeoJSON(),
+            url: "/data/countries.json",
+          }),
         }),
       ],
       view: new View({
@@ -28,7 +32,7 @@ const OpenLayersMap = () => {
     return () => map.setTarget(undefined); // Cleanup when unmounting
   }, []);
 
-  return <div ref={mapRef} className="w-full h-[900px]" />;
+  return <div ref={mapRef} className="w-full h-[900px] m-0 font-serif " />;
 };
 
 export default OpenLayersMap;
