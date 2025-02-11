@@ -6,6 +6,7 @@ import View from "ol/View";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON";
 import VectorSource from "ol/source/Vector";
+import Link from "ol/interaction/Link";
 
 const OpenLayersMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -28,6 +29,7 @@ const OpenLayersMap = () => {
         zoom: 2, // Default zoom level
       }),
     });
+    map.addInteraction(new Link());
 
     return () => map.setTarget(undefined); // Cleanup when unmounting
   }, []);
