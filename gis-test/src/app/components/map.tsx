@@ -3,10 +3,11 @@
 import { useEffect, useRef } from "react";
 import Map from "ol/Map";
 import View from "ol/View";
+import Link from "ol/interaction/Link";
+import DragAndDrop from "ol/interaction/DragAndDrop";
+import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON";
-import VectorSource from "ol/source/Vector";
-import Link from "ol/interaction/Link";
 
 const OpenLayersMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -16,20 +17,25 @@ const OpenLayersMap = () => {
 
     const map = new Map({
       target: mapRef.current, // Attach map to div
-      layers: [
-        new VectorLayer({
-          source: new VectorSource({
-            format: new GeoJSON(),
-            url: "/data/countries.json",
-          }),
-        }),
-      ],
       view: new View({
         center: [0, 0], // Coordinates in EPSG:3857 (Web Mercator) Default center (longitude, latitude)
         zoom: 2, // Default zoom level
       }),
     });
     map.addInteraction(new Link());
+
+    const source = new VectorSource();
+    const layer = new VectorLayer({
+      source: source,
+    });
+    map.addLayer(layer);
+
+    map.addInteraction(
+      new DragAndDrop({
+        source: source,
+        formatConstructors: [GeoJSON],
+      })
+    );
 
     return () => map.setTarget(undefined); // Cleanup when unmounting
   }, []);
