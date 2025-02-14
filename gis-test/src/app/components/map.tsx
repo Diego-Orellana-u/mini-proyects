@@ -8,6 +8,7 @@ import DragAndDrop from "ol/interaction/DragAndDrop";
 import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON";
+import Modify from "ol/interaction/Modify";
 
 const OpenLayersMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -34,6 +35,12 @@ const OpenLayersMap = () => {
       new DragAndDrop({
         source: source,
         formatConstructors: [GeoJSON],
+      })
+    );
+
+    map.addInteraction(
+      new Modify({
+        source: source,
       })
     );
 
