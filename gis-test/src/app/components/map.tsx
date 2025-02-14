@@ -9,6 +9,7 @@ import VectorSource from "ol/source/Vector";
 import VectorLayer from "ol/layer/Vector";
 import GeoJSON from "ol/format/GeoJSON";
 import Modify from "ol/interaction/Modify";
+import Draw from "ol/interaction/Draw";
 
 const OpenLayersMap = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -40,6 +41,13 @@ const OpenLayersMap = () => {
 
     map.addInteraction(
       new Modify({
+        source: source,
+      })
+    );
+
+    map.addInteraction(
+      new Draw({
+        type: "Polygon",
         source: source,
       })
     );
