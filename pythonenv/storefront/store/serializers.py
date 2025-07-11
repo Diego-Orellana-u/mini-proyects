@@ -1,6 +1,6 @@
 from decimal import Decimal
 from rest_framework import serializers
-from .models import Product
+from .models import Product, Cart, CartItem
 from .models import Collection
 
 
@@ -23,3 +23,12 @@ class ProductSerializer(serializers.ModelSerializer):
     return product.unit_price * Decimal(1.1)
   
   
+class CartSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Cart
+    fields = ['id','created_at']
+
+class CartItemSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = CartItem
+    fields = ['id', 'cart', 'product', 'quantity']
