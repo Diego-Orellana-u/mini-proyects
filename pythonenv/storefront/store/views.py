@@ -1,11 +1,11 @@
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Count
 from rest_framework import status
-from .models import Product, Collection
-from .serializers import ProductSerializer, CollectionSerializer
+from .models import Product, Collection, Cart, CartItem
+from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer
 
 
 
@@ -81,3 +81,18 @@ def product_detail(request, pk):
       product.delete()
       return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class CartViewSet(ModelViewSet):
+  queryset = Cart.objects.all()
+  serializer_class = CartSerializer
+
+class CartItemViewSet(ModelViewSet):
+  queryset = CartItem.objects.all()
+  serializer_class = CartItemSerializer
+
+  def create(self, request, *args, **kwargs):
+    serializer = self.get_serializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    self.perform_create(serializer)  # Calls serializer.save() internally
+    headers = self.get_success_headers(serializer.data)
+    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
