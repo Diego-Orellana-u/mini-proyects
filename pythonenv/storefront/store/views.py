@@ -6,6 +6,7 @@ from django.db.models import Count
 from rest_framework import status
 from .models import Product, Collection, Cart, CartItem
 from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer
+from django.db import transaction
 
 
 
@@ -90,9 +91,22 @@ class CartItemViewSet(ModelViewSet):
   queryset = CartItem.objects.all()
   serializer_class = CartItemSerializer
 
-  def create(self, request, *args, **kwargs):
-    serializer = self.get_serializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    self.perform_create(serializer)  # Calls serializer.save() internally
-    headers = self.get_success_headers(serializer.data)
-    return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+  def create(self, request):
+    try:
+      with transaction.atomic():
+        item = CartItem.objects.get(cart_id=request.data['cart'], product_id=request.data['product'])
+        item.quantity += int(request.data.get('quantity', 0))
+        item.save()
+        item.refresh_from_db()
+        serializer = self.get_serializer(item)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    except:
+      serializer = self.get_serializer(data=request.data)
+      serializer.is_valid(raise_exception=True)
+      self.perform_create(serializer)
+      return Response(
+        serializer.data,
+        status=status.HTTP_201_CREATED,
+        headers=self.get_success_headers(serializer.data)
+      )
