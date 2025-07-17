@@ -33,9 +33,8 @@ class CartItemSerializer(serializers.ModelSerializer):
   total_price = serializers.SerializerMethodField(method_name='get_total_price')
   product = SimpleProductSerializer(read_only=True)
 
-    # for write operations, show a dropdown of product IDs
   product_id = serializers.PrimaryKeyRelatedField(
-      source='product',            # maps this back onto cartitem.product
+      source='product',
       queryset=Product.objects.all(),
       write_only=True
   )
@@ -46,7 +45,7 @@ class CartItemSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = CartItem
-    fields = ['id','product', 'product_id', 'quantity', 'total_price']
+    fields = ['id', 'product', 'product_id', 'quantity', 'total_price']
   
 
 class CartSerializer(serializers.ModelSerializer):
