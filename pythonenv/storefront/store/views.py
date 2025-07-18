@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import F
@@ -85,8 +85,8 @@ def product_detail(request, pk):
       return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CartViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
-  queryset = Cart.objects.all()
+class CartViewSet(CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, GenericViewSet):
+  queryset = Cart.objects.prefetch_related('items__product').all()
   serializer_class = CartSerializer
 
 
