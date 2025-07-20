@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.db.models import F
 from django.db.models import Count
 from rest_framework import status
 from .models import Product, Collection, Cart, CartItem
@@ -83,9 +85,11 @@ def product_detail(request, pk):
       return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CartViewSet(ModelViewSet):
+class CartViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
   queryset = Cart.objects.all()
   serializer_class = CartSerializer
+
+
 
 class CartItemViewSet(ModelViewSet):
   queryset = CartItem.objects.all()
