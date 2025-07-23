@@ -92,13 +92,14 @@ class CartViewSet(CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, Gener
 
 
 class CartItemViewSet(ModelViewSet):
-  queryset = CartItem.objects.all()
   serializer_class = CartItemSerializer
-
+  def get_queryset(self):
+    return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).select_related('product')
+  
   def create(self, request):
     try:
       with transaction.atomic():
-        item = CartItem.objects.get(cart_id=request.data['cart'], product_id=request.data['product'])
+        item = CartItem.objects.get(cart_id=request.data['cart_pk'], product_id=request.data['product'])
         item.quantity += int(request.data.get('quantity', 0))
         item.save()
         item.refresh_from_db()
