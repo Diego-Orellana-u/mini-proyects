@@ -7,7 +7,7 @@ from django.db.models import F
 from django.db.models import Count
 from rest_framework import status
 from .models import Product, Collection, Cart, CartItem
-from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer
+from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer
 from django.db import transaction
 
 
@@ -90,28 +90,13 @@ class CartViewSet(CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, Gener
   serializer_class = CartSerializer
 
 
-
 class CartItemViewSet(ModelViewSet):
-  serializer_class = CartItemSerializer
+  
+  def get_serializer_class(self):
+    if self.request.method == 'POST':
+      return AddCartItemSerializer
+    return CartItemSerializer
+  
+  # Anotar esto que no pude hacerlo
   def get_queryset(self):
     return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).select_related('product')
-  
-  def create(self, request):
-    try:
-      with transaction.atomic():
-        item = CartItem.objects.get(cart_id=request.data['cart_pk'], product_id=request.data['product'])
-        item.quantity += int(request.data.get('quantity', 0))
-        item.save()
-        item.refresh_from_db()
-        serializer = self.get_serializer(item)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    except:
-      serializer = self.get_serializer(data=request.data)
-      serializer.is_valid(raise_exception=True)
-      self.perform_create(serializer)
-      return Response(
-        serializer.data,
-        status=status.HTTP_201_CREATED,
-        headers=self.get_success_headers(serializer.data)
-      )
