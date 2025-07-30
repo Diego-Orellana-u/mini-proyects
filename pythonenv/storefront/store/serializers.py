@@ -36,6 +36,11 @@ class CartItemSerializer(serializers.ModelSerializer):
     model = CartItem
     fields = ['id', 'quantity', 'product', 'total_price']
 
+class UpdateCartItemSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = CartItem
+    fields = ['quantity']
+
 class CartSerializer(serializers.ModelSerializer):
   id = serializers.UUIDField(read_only=True)
   items = CartItemSerializer(many=True, read_only=True)
