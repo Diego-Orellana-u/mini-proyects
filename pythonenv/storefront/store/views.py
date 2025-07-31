@@ -3,13 +3,10 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.db.models import F
 from django.db.models import Count
 from rest_framework import status
 from .models import Product, Collection, Cart, CartItem
-from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer
-from django.db import transaction
-
+from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -91,10 +88,13 @@ class CartViewSet(CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, Gener
 
 
 class CartItemViewSet(ModelViewSet):
+  http_method_names = ['get', 'post', 'patch', 'delete']
   
   def get_serializer_class(self):
     if self.request.method == 'POST':
       return AddCartItemSerializer
+    elif self.request.method == 'PATCH':
+      return UpdateCartItemSerializer
     return CartItemSerializer
   
   def get_serializer_context(self):
