@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
+AUTH_USER_MODEL = 'core.User'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.sessions',
