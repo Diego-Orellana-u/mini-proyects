@@ -1,6 +1,6 @@
 from decimal import Decimal
 from rest_framework import serializers
-from .models import Product, Cart, CartItem
+from .models import Product, Cart, CartItem, Customer
 from .models import Collection
 class CollectionSerializer(serializers.ModelSerializer):
   class Meta: 
@@ -82,3 +82,10 @@ class AddCartItemSerializer(serializers.ModelSerializer):
   class Meta:
     model = CartItem
     fields = ['id', 'product_id', 'quantity']
+
+
+class CustomerSerializer(serializers.ModelSerializer):
+  user_id = serializers.IntegerField()
+  class Meta:
+    model = Customer
+    fields = ['id', 'user_id', 'phone', 'birth_date', 'membership']

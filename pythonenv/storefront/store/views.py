@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin
+from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Count
 from rest_framework import status
-from .models import Product, Collection, Cart, CartItem
-from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer
+from .models import Product, Collection, Cart, CartItem, Customer
+from .serializers import ProductSerializer, CollectionSerializer, CartSerializer, CartItemSerializer, AddCartItemSerializer, UpdateCartItemSerializer, CustomerSerializer
 
 
 @api_view(['GET', 'POST'])
@@ -103,3 +103,8 @@ class CartItemViewSet(ModelViewSet):
   # Anotar esto que no pude hacerlo
   def get_queryset(self):
     return CartItem.objects.filter(cart_id=self.kwargs['cart_pk']).select_related('product')
+
+
+class CustomerViewSet(RetrieveModelMixin, CreateModelMixin, UpdateModelMixin, GenericViewSet):
+  queryset = Customer.objects.all()
+  serializer_class = CustomerSerializer
