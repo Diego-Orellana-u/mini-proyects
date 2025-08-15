@@ -3,6 +3,8 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, UpdateModelMixin
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .permissions import IsAdminOrReadOnly
 from django.db.models import Count
 from rest_framework import status
 from .models import Product, Collection, Cart, CartItem, Customer
@@ -49,7 +51,7 @@ def collection_detail(request, pk):
 
 
 
-@api_view(['GET', 'POST'])
+# @api_view(['GET', 'POST'])
 def product_list(request):
   if request.method == 'GET':
     queryset = Product.objects.select_related('collection').all()
@@ -62,25 +64,12 @@ def product_list(request):
     serializer.save()
     return Response('ok')
   
-@api_view(['GET', 'PUT', 'DELETE'])
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == 'GET':
-      serializer = ProductSerializer(product)
-      return Response(serializer.data)
-    
-    elif request.method == 'PUT':
-      serializer = ProductSerializer(product, data=request.data)
-      serializer.is_valid(raise_exception=True)
-      serializer.save()
-      return Response(serializer.data, status=status.HTTP_201_CREATED)
-    
-    elif request.method == "DELETE":
-      if product.orderitem_set.count() > 0:
-        return Response({'error': 'Product can not be deleted because it is associated with an order item.'} ,status=status.HTTP_405_METHOD_NOT_ALLOWED)
-      product.delete()
-      return Response(status=status.HTTP_204_NO_CONTENT)
-
+class ProductViewSet(ModelViewSet):
+  queryset = Product.objects.all()
+  serializer_class = ProductSerializer
+  
+  def get_serializer_context(self):
+    return {'request': self.request}
 
 class CartViewSet(CreateModelMixin, RetrieveModelMixin, DestroyModelMixin, GenericViewSet):
   queryset = Cart.objects.prefetch_related('items__product').all()
@@ -108,8 +97,14 @@ class CartItemViewSet(ModelViewSet):
 class CustomerViewSet(RetrieveModelMixin, CreateModelMixin, UpdateModelMixin, GenericViewSet):
   queryset = Customer.objects.all()
   serializer_class = CustomerSerializer
+  permission_classes = [IsAuthenticated]
 
-  @action(detail=False, methods=['GET', 'PUT'])
+  def get_permissions(self):
+    if self.request.method == 'GET':
+      return [AllowAny()]
+    return [IsAuthenticated()]
+
+  @action(detail=False, methods=['GET', 'PUT'], permission_classes=[])
   def me(self, request):
     (customer, created) = Customer.objects.get_or_create(user_id=request.user.id)
     if request.method == 'GET':
