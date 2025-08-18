@@ -1,6 +1,6 @@
-from rest_framework.permissions import BasePermission
+from rest_framework import permissions
 
-class IsAdminOrReadOnly(BasePermission):
+class IsAdminOrReadOnly(permissions.BasePermission):
 
   def has_permission(self, request, view):
-    return bool(request.method == 'GET' or request.user and request.user.is_staff)
+    return bool(request.method in permissions.SAFE_METHODS or request.user and request.user.is_staff)
