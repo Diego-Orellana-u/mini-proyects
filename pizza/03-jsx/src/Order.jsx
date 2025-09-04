@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Pizza from "./Pizza";
+import Cart from "./Cart";
 
 const intl = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -7,6 +8,7 @@ const intl = new Intl.NumberFormat("en-US", {
 });
 
 export default function Order() {
+  const [cart, setCart] = useState([]);
   const [pizzaList, setPizzaList] = useState([]);
   const [pizzaType, setPizzaType] = useState("pepperoni");
   const [pizzaSize, setPizzaSize] = useState("M");
@@ -16,7 +18,7 @@ export default function Order() {
 
   if (!loading) {
     selectedPizza = pizzaList.find((pizza) => pizzaType === pizza.id);
-    price = selectedPizza.sizes[pizzaSize];
+    price = intl.format(selectedPizza.sizes[pizzaSize]);
   }
 
   useEffect(() => {
@@ -33,13 +35,19 @@ export default function Order() {
   return (
     <div className="order">
       <h2>Create Order</h2>
-      <form>
+      <form
+        className="da"
+        onSubmit={(e) => {
+          e.preventDefault();
+          setCart([...cart, { pizza: selectedPizza, size: pizzaSize, price }]);
+        }}
+      >
         <div>
           <div>
             <label htmlFor="pizza-type">Pizza Type</label>
             <select
               name="pizza-type"
-              value={pizzaType.name}
+              value={pizzaType}
               onChange={(e) => setPizzaType(e.target.value)}
             >
               {pizzaList.map((pizza) => (
@@ -89,17 +97,20 @@ export default function Order() {
           </div>
           <button type="submit">Add to Cart</button>
         </div>
-        <div className="order-pizza">
-          {selectedPizza && (
+        {loading ? (
+          <h1> loading pizza</h1>
+        ) : (
+          <div className="order-pizza">
             <Pizza
               name={selectedPizza.name}
               description={selectedPizza.description}
               image={selectedPizza.image}
             />
-          )}
-          <p>${price}</p>
-        </div>
+            <p>{price}</p>
+          </div>
+        )}
       </form>
+      {loading ? <h2>loading jojo</h2> : <Cart cart={cart} />}
     </div>
   );
 }
