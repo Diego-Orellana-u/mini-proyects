@@ -65,4 +65,5 @@ test("", async () => {
 
   const img = screen.getByRole("img");
   expect(img.alt).toBe(focusedOrderData.orderItems[0].name);
+  expect();
 });
