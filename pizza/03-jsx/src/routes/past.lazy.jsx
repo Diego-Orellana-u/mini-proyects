@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { Suspense, use, useState } from "react";
 import Modal from "../Modal.jsx";
-import getPastOrders from "../api/getPastOrders";
-import getPastOrder from "../api/getPastOrder";
+import getPastOrders from "../api/getPastOrders.js";
+import getPastOrder from "../api/getPastOrder.js";
 import ErrorBoundary from "../ErrorBoundary.jsx";
 
 const intl = Intl.NumberFormat("en-US", {
