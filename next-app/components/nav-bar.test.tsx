@@ -7,11 +7,13 @@ describe("Rendering of nav bar", () => {
     render(<NavBar />);
   });
 
-  it("Should render the nav parent tag", () => {
+  it("Should render the nav container with correct test-id and tag", () => {
     render(<NavBar />);
 
     const navTag = screen.getByTestId("parent-nav");
-    expect(navTag.tagName).toBe("NAV");
+
+    expect(navTag).toBeInTheDocument();
+    expect(navTag.tagName.toLowerCase()).toBe("nav");
   });
 
   it("Should render sign in button", () => {
