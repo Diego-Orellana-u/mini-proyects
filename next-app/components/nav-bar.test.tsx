@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import NavBar from "./nav-bar";
 
 describe("Rendering of nav bar", () => {
@@ -20,7 +20,14 @@ describe("Rendering of nav bar", () => {
     render(<NavBar />);
     const signInBtn = screen.getByText("Sign In");
 
-    expect(signInBtn);
+    expect(signInBtn).toBeInTheDocument();
+  });
+
+  it("Link in the button should have href to signin", () => {
+    render(<NavBar />);
+    const signInLink = screen.getByRole("link", { name: /sign in/i });
+
+    expect(signInLink).toHaveAttribute("href", "/signin");
   });
 
   it("Should render sign up button", () => {
@@ -30,18 +37,23 @@ describe("Rendering of nav bar", () => {
     expect(signUpBtn);
   });
 
-  it("Link component in the button should have href to signin", () => {
-    render(<NavBar />);
-    const signInLink = screen.getByRole("link", { name: /sign in/i });
-
-    expect(signInLink).toHaveAttribute("href", "/signin");
-  });
-
-  it("Link component in the button should have href to signup", () => {
+  it("Link in the button should have href to signup", () => {
     render(<NavBar />);
 
     const signUpLink = screen.getByRole("link", { name: /sign up/i });
 
     expect(signUpLink).toHaveAttribute("href", "/signup");
+  });
+
+  it("Auth links should be inside the same nav tag", () => {
+    render(<NavBar />);
+
+    const nav = screen.getByTestId("parent-nav");
+
+    const signInLink = within(nav).getByRole("link", { name: /sign in/i });
+    const signUpLink = within(nav).getByRole("link", { name: /sign up/i });
+
+    expect(signInLink).toBeInTheDocument();
+    expect(signUpLink).toBeInTheDocument();
   });
 });
