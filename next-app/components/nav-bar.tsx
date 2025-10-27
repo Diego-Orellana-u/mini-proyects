@@ -21,9 +21,10 @@ export default function NavBar() {
           >
             Wiki
           </Link>
-
-          <NavigationMenu>
-            <NavigationMenuItem>
+        </div>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem className="flex items-center gap-2">
               <Button asChild variant="outline">
                 <Link data-testid="nav-signin-link" href="/signin">
                   Sign In
@@ -38,8 +39,8 @@ export default function NavBar() {
                 </Link>
               </Button>
             </NavigationMenuItem>
-          </NavigationMenu>
-        </div>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
     </nav>
   );
