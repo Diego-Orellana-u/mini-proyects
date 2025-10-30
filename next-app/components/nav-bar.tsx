@@ -7,7 +7,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-export default function NavBar() {
+export function NavBar() {
   return (
     <nav
       data-testid="parent-nav"
