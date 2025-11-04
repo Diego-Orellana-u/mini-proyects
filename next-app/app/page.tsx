@@ -1,4 +1,4 @@
-import { WikiCard } from "@/components/wiki-card";
+import { WikiCard } from "@/components/ui/wiki-card";
 
 export default function Home() {
   return (
